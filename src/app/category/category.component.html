@@ -1,0 +1,43 @@
+<div>
+  <a
+    style="font-size: 8pt !important;"
+    class="btn btn-success btn-lg"
+    [routerLink]="'/add-category'"
+    >{{ "add" | translate }}</a
+  >
+  <input
+    type="button"
+    style="font-size: 8pt !important;"
+    class="btn btn-success btn-lg"
+    value="{{ 'delete' | translate }}"
+    (click)="delete()"
+  />
+</div>
+<div>
+  <table class="table" *ngIf="categories && categories.length != 0">
+    <tr>
+      <td scope="col">№</td>
+      <td scope="col">{{ "category name" | translate }}</td>
+      <td scope="col"></td>
+    </tr>
+    <tr *ngFor="let item of categories; let i = index">
+      <td scope="row">
+        <input
+          type="checkbox"
+          (click)="check(item)"
+          [(ngModel)]="item.checked"
+        />
+      </td>
+      <td>{{ item.name }}</td>
+      <td>
+        <a
+          class="btn btn-success btn-lg"
+          style="font-size: 8pt !important;"
+          [routerLink]="'/edit-category'"
+          [queryParams]="{ id: item._id, name: item.name }"
+          >{{ "edit" | translate }}</a
+        >
+      </td>
+    </tr>
+  </table>
+</div>

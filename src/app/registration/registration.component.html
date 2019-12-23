@@ -1,0 +1,306 @@
+<div class="home">
+  <div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <h3>РЕГИСТРАЦИЯ</h3>
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="angForm" novalidate>
+        <div *ngIf="errorMsg" [ngClass]="'error'">
+          {{ errorMsg | translate }}
+        </div>
+        <div class="rad">
+          <input
+            type="radio"
+            class="fadeIn first"
+            name="role"
+            placeholder="{{ 'MANAGER' | translate }}"
+            [(ngModel)]="role"
+            formControlName="role"
+            value="manager"
+          />{{ "MANAGER" | translate }}
+          <input
+            type="radio"
+            class="fadeIn first"
+            name="role"
+            placeholder="{{ 'INVESTOR' | translate }}"
+            [(ngModel)]="role"
+            formControlName="role"
+            value="investor"
+          />{{ "INVESTOR" | translate }}
+          <input
+            type="radio"
+            class="fadeIn first"
+            name="role"
+            placeholder="{{ 'LAWYER' | translate }}"
+            [(ngModel)]="role"
+            formControlName="role"
+            value="lawyer"
+          />{{ "LAWYER" | translate }}
+          <input
+            type="radio"
+            class="fadeIn first"
+            name="role"
+            placeholder="{{ 'FINANCIER' | translate }}"
+            [(ngModel)]="role"
+            formControlName="role"
+            value="financier"
+          />{{ "FINANCIER" | translate }}
+          <div
+            *ngIf="
+              angForm.controls['role'].invalid &&
+              (angForm.controls['role'].dirty ||
+                angForm.controls['role'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="angForm.controls['role'].errors.required">
+              {{ "role required" | translate }}
+            </div>
+          </div>
+        </div>
+        <input
+          type="text"
+          id="login"
+          class="fadeIn second"
+          name="login"
+          placeholder="{{ 'login' | translate }}"
+          [(ngModel)]="login"
+          formControlName="login"
+        />
+        <div
+          *ngIf="
+            angForm.controls['login'].invalid &&
+            (angForm.controls['login'].dirty ||
+              angForm.controls['login'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['login'].errors.required">
+            {{ "login required" | translate }}
+          </div>
+        </div>
+        <input
+          type="password"
+          id="password"
+          class="fadeIn third"
+          name="password"
+          placeholder="{{ 'password' | translate }}"
+          [(ngModel)]="password"
+          formControlName="password"
+        />
+        <div
+          *ngIf="
+            angForm.controls['password'].invalid &&
+            (angForm.controls['password'].dirty ||
+              angForm.controls['password'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['password'].errors.required">
+            {{ "password required" | translate }}
+          </div>
+        </div>
+        <input
+          type="password"
+          id="confirm"
+          class="fadeIn fourth"
+          name="confirm"
+          placeholder="{{ 'confirm password' | translate }}"
+          [(ngModel)]="confirm"
+          formControlName="confirm"
+        />
+        <div
+          *ngIf="
+            angForm.controls['confirm'].invalid &&
+            (angForm.controls['confirm'].dirty ||
+              angForm.controls['confirm'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['confirm'].errors.required">
+            {{ "confirm password required" | translate }}
+          </div>
+        </div>
+        <input
+          type="text"
+          id="email"
+          class="fadeIn fifth"
+          name="email"
+          placeholder="{{ 'email' | translate }}"
+          [(ngModel)]="email"
+          formControlName="email"
+        />
+        <div *ngFor="let validation of account_validation_messages.email">
+          <div
+            *ngIf="
+              angForm.get('email').hasError(validation.type) &&
+              (angForm.controls['email'].dirty ||
+                angForm.controls['email'].touched)
+            "
+            class="alert alert-danger"
+          >
+            {{ validation.message | translate }}
+          </div>
+        </div>
+        <input
+          type="text"
+          id="phone"
+          class="fadeIn sixth"
+          name="phone"
+          placeholder="{{ 'phone' | translate }}"
+          [(ngModel)]="phone"
+          formControlName="phone"
+        />
+        <div
+          *ngIf="
+            angForm.controls['phone'].invalid &&
+            (angForm.controls['phone'].dirty ||
+              angForm.controls['phone'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['phone'].errors.required">
+            {{ "phone required" | translate }}
+          </div>
+        </div>
+        <input
+          *ngIf="role == 'investor'"
+          type="text"
+          id="bin"
+          name="bin"
+          placeholder="{{ 'bin' | translate }}"
+          [(ngModel)]="bin"
+          formControlName="bin"
+          (ngModelChange)="binService()"
+        />
+        <div *ngFor="let validation of account_validation_messages.bin">
+          <div
+            *ngIf="
+              angForm.get('bin').hasError(validation.type) &&
+              (angForm.controls['bin'].dirty || angForm.controls['bin'].touched)
+            "
+            class="alert alert-danger"
+          >
+            {{ validation.message | translate }}
+          </div>
+        </div>
+        <input
+          *ngIf="role == 'investor'"
+          type="text"
+          id="organisation"
+          name="organisation"
+          placeholder="{{ 'organisation name' | translate }}"
+          [(ngModel)]="organisation"
+          formControlName="organisation"
+        />
+        <div
+          *ngIf="
+            angForm.controls['organisation'].invalid &&
+            (angForm.controls['organisation'].dirty ||
+              angForm.controls['organisation'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['organisation'].errors.required">
+            {{ "organisation required" | translate }}
+          </div>
+        </div>
+        <input
+          *ngIf="role == 'investor'"
+          type="text"
+          id="address"
+          name="address"
+          placeholder="{{ 'address' | translate }}"
+          [(ngModel)]="address"
+          formControlName="address"
+        />
+        <div
+          *ngIf="
+            angForm.controls['address'].invalid &&
+            (angForm.controls['address'].dirty ||
+              angForm.controls['address'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['address'].errors.required">
+            {{ "address required" | translate }}
+          </div>
+        </div>
+        <input
+          *ngIf="role == 'investor'"
+          type="date"
+          id="registration"
+          name="registration"
+          placeholder="{{ 'registration' | translate }}"
+          [(ngModel)]="registration"
+          formControlName="registration"
+        />
+        <div
+          *ngIf="
+            angForm.controls['registration'].invalid &&
+            (angForm.controls['registration'].dirty ||
+              angForm.controls['registration'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['registration'].errors.required">
+            {{ "registration required" | translate }}
+          </div>
+        </div>
+        <input
+          *ngIf="role == 'investor'"
+          type="text"
+          id="fio_director"
+          name="fio_director"
+          placeholder="{{ 'fioDirector' | translate }}"
+          [(ngModel)]="fio_director"
+          formControlName="fio_director"
+        />
+        <div
+          *ngIf="
+            angForm.controls['fio_director'].invalid &&
+            (angForm.controls['fio_director'].dirty ||
+              angForm.controls['fio_director'].touched)
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="angForm.controls['fio_director'].errors.required">
+            {{ "fioDirector required" | translate }}
+          </div>
+        </div>
+        <div class="aggree fadeIn twelfth">
+          <input
+            type="checkbox"
+            name="aggree"
+            [(ngModel)]="aggree"
+            formControlName="aggree"
+            required
+          /><label for="aggree">{{ "aggree" | translate }}</label>
+          <div
+            *ngIf="
+              angForm.controls['aggree'].invalid &&
+              (angForm.controls['aggree'].dirty ||
+                angForm.controls['aggree'].touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="angForm.controls['aggree'].errors.required">
+              {{ "aggree required" | translate }}
+            </div>
+          </div>
+        </div>
+        <input
+          type="submit"
+          class="fadeIn thirteenth"
+          value="{{ 'register' | translate }}"
+          (click)="register()"
+        />
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="wrapper fadeInDown home">
+	<div id="formContent">
+		<!-- Tabs Titles -->
+
+		<!-- Icon -->
+		<div class="fadeIn first">
+			<h3>{{ 'log in' | translate }}</h3>
+		</div>
+
+		<!-- Login Form -->
+		<form [formGroup]="angForm" novalidate>
+			<div *ngIf="errorMsg" [ngClass]="'error'">{{ errorMsg }}</div>
+			<input
+				type="text"
+				id="login"
+				class="fadeIn second"
+				name="login"
+				placeholder="{{ 'login' | translate }}"
+				[(ngModel)]="login"
+				formControlName="login"
+			/>
+			<div
+				*ngIf="
+					angForm.controls['login'].invalid &&
+					(angForm.controls['login'].dirty || angForm.controls['login'].touched)
+				"
+				class="alert alert-danger"
+			>
+				<div *ngIf="angForm.controls['login'].errors.required">
+					{{ 'login required' | translate }}
+				</div>
+			</div>
+			<input
+				type="password"
+				id="password"
+				class="fadeIn third"
+				name="password"
+				placeholder="{{ 'password' | translate }}"
+				[(ngModel)]="password"
+				formControlName="password"
+			/>
+			<div
+				*ngIf="
+					angForm.controls['password'].invalid &&
+					(angForm.controls['password'].dirty || angForm.controls['password'].touched)
+				"
+				class="alert alert-danger"
+			>
+				<div *ngIf="angForm.controls['password'].errors.required">
+					{{ 'password required' | translate }}
+				</div>
+			</div>
+			<input type="submit" class="fadeIn fourth" value="{{ 'enter' | translate }}" (click)="checkLogin()" />
+		</form>
+		<!-- Remind Password -->
+		<div id="formFooter">
+			<a class="underlineHover" routerLink="/forgot">{{ 'forgot password' | translate }}</a>
+			<br />
+			<a class="underlineHover" routerLink="/registration">{{ 'register' | translate }}</a>
+		</div>
+	</div>
+</div>

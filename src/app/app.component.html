@@ -1,0 +1,145 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<ngx-spinner></ngx-spinner>
+<div style="width: 100%;height: 10%;" *ngIf="!isLogged && (host+'/' == href || href == host+'/registration' || href == host+'/forgot')">
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 15%; padding: 25px;" rowspan="2">
+                <a [routerLink]="'/'">
+                    <img src="assets/images/logoSPK.png" style="width: 60px; height: 80px;"/>
+                </a>
+            </td>
+            <td align="center" style="width: 70%;" rowspan="2">
+                <h5 style="color: rgb(26, 26, 161);">АКЦИОНЕРНОЕ ОБЩЕСТВО</h5>
+                <h5 style="color: rgb(26, 26, 161);">«СОЦИАЛЬНО-ПРЕДПРИНИМАТЕЛЬСКАЯ КОРПОРАЦИЯ «ASTANA»</h5>
+            </td>
+            <td align="right" style="width: 15%;">
+                <a (click)="changeLNG('kz')">
+                    <img src="assets/images/kz.png" style="width: 35px; height: 25px;"/>
+                </a>&nbsp;
+                <a (click)="changeLNG('ru')">
+                    <img src="assets/images/ru.png" style="width: 35px; height: 25px;"/>
+                </a>&nbsp;
+                <a (click)="changeLNG('en')">
+                    <img src="assets/images/en.png" style="width: 35px; height: 25px;"/>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 15%;"><br></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <table style="width: 100%;">
+                    <tr>
+                        <td align="left" style="width: 20%;"><a [routerLink]="'/note'" style="color: rgb(26, 26, 161);font-weight: bold;"> &nbsp; Потенциальным партнерам </a></td>
+                        <td align="left" style="width: 20%;"><a [routerLink]="'/guide'" style="color: rgb(26, 26, 161);font-weight: bold;"> Руководство пользователя </a></td>
+                        <td align="left" style="width: 20%;"><a href="{{host}}#contacts" style="color: rgb(26, 26, 161);font-weight: bold;"> Контакты </a></td>
+                        <td align="right" style="width: 40%;"><a [routerLink]="'/login'" style="color: rgb(26, 26, 161);font-weight: bold;"> Вход </a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="container-fluid" style="background-color: blue;width: 100%;height: 10%;"  *ngIf="isLogged">
+    <a (click)="changeLNG('kz')">
+        <img src="assets/images/kz.png" style="width: 35px; height: 25px;"/>
+    </a>&nbsp;
+    <a (click)="changeLNG('ru')">
+        <img src="assets/images/ru.png" style="width: 35px; height: 25px;"/>
+    </a>&nbsp;
+    <a (click)="changeLNG('en')">
+        <img src="assets/images/en.png" style="width: 35px; height: 25px;"/>
+    </a>
+</div>
+<mat-sidenav-container *ngIf="isLogged" style="width:100%;">
+    <mat-sidenav #sidenav  mode="side" opened style="border-right: 2px solid gray !important;height:100%;width: 20%">
+        <mat-nav-list>
+            <a *ngIf="role!='lawyer' && role!='financier'" mat-list-item [routerLink]="'/main'" [ngClass]="{'text-info': pathURL.includes('/main')}" class="nav-caption"><mat-icon>home</mat-icon> {{ 'MAIN' | translate }} </a>
+            <a *ngIf="role=='investor'" mat-list-item [routerLink]="'/zayavka'" [ngClass]="{'text-info': pathURL.includes('/zayavka')}" class="nav-caption"><mat-icon>description</mat-icon> {{ 'create zayavka' | translate }} </a>
+            <a *ngIf="role=='admin'" mat-list-item [routerLink]="'/roles'" [ngClass]="{'text-info': pathURL.includes('/roles')}"><mat-icon>account_box</mat-icon> {{ 'roles' | translate }} </a>
+            <a *ngIf="role=='admin'" mat-list-item [routerLink]="'/category'" [ngClass]="{'text-info': pathURL.includes('/category')}"><mat-icon>dns</mat-icon> {{ 'category' | translate }} </a>
+            <a *ngIf="role=='admin'" mat-list-item [routerLink]="'/project-role'" [ngClass]="{'text-info': pathURL.includes('/project-role')}"><mat-icon>supervisor_account</mat-icon> {{ 'project-role' | translate }} </a>
+            <a *ngIf="role!='lawyer' && role!='financier'" mat-list-item [routerLink]="'/notification'" [ngClass]="{'text-info': pathURL.includes('/notification')}"><mat-icon>speaker_notes</mat-icon> {{ 'notification' | translate }} </a>
+            <a mat-list-item [routerLink]="'/cabinet'" [ngClass]="{'text-info': pathURL.includes('/cabinet')}"><mat-icon>account_balance</mat-icon> {{ 'cabinet' | translate }} </a>
+            <div *ngFor="let pr of projects; let j = index"> 
+                <a (click)=showHide(pr._id)><mat-icon>send</mat-icon>{{pr.name}}</a>
+                <mat-nav-list>
+                    <div [id]="pr._id" [hidden]="!(pathURL.includes('id='+pr._id))">
+                        <a *ngIf="pr.status=='Принято'" [ngClass]="{'text-info': pathURL.includes('/project/gant?id='+pr._id)}" mat-list-item [href]="'/project/gant?id='+pr._id"><mat-icon>assignment</mat-icon> {{ 'GANTA' | translate }} </a>
+                        <a mat-list-item [href]="'/project/anketa?id='+pr._id" [ngClass]="{'text-info': pathURL.includes('/project/anketa?id='+pr._id)}"><mat-icon>book</mat-icon> {{ 'ANKETA' | translate }} </a>
+                        <a *ngIf="pr.status=='Принято'" mat-list-item [href]="'/project/Second_etap?id='+pr._id" [ngClass]="{'text-info': pathURL.includes('/project/Second_etap?id='+pr._id)}"><mat-icon>file_copy</mat-icon> {{ '2ETAP' | translate }} </a>
+                        <div style="margin-left: 15px;">
+                            <a (click)="showHide('doc_'+pr._id)"><mat-icon>attachment</mat-icon> {{ 'DOCUMENTATION' | translate }} </a>
+                            <mat-nav-list>
+                                <div [id]="'doc_'+pr._id" [hidden]="!(pathURL.includes('docs?id='+pr._id))">
+                                    <a mat-list-item [href]="'/project/1etapdocs?id='+pr._id" [ngClass]="{'text-info': pathURL.includes('/project/1etapdocs?id='+pr._id)}"><mat-icon>folder_open</mat-icon> {{ '1-STAGE' | translate }} </a>
+                                    <!--a mat-list-item [routerLink]="'/project/2etapdocs/'" [queryParams]="{id: pr._id}"> ВТОРОЙ ЭТАП </a-->
+                                    <a mat-list-item [href]="'/project/spkdocs?id='+pr._id" [ngClass]="{'text-info': pathURL.includes('/project/spkdocs?id='+pr._id)}"><mat-icon>folder</mat-icon> {{ 'SPK' | translate }} </a>
+                                </div>
+                            </mat-nav-list>
+                        </div>
+                    </div>
+                </mat-nav-list>
+            </div>
+            <a mat-list-item (click)="logout()" href=""><mat-icon>exit_to_app</mat-icon> {{ 'logout' | translate }} </a>
+            <!--a mat-list-item (click)="sidenav.toggle()" href="">Close</a-->
+
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content style="height:90vh;width:80%;">
+        <div style="font-weight: bold; background-color: cadetblue; color: white;">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/main')">
+                        <a [routerLink]="'/main'" class="nav-caption"> {{ 'MAIN' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/zayavka')">
+                        <a [routerLink]="'/zayavka'" class="nav-caption"> {{ 'create zayavka' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/roles')">
+                        <a [routerLink]="'/roles'" class="nav-caption"> {{ 'roles' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/category')">
+                        <a [routerLink]="'/category'" class="nav-caption"> {{ 'category' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/project-role')">
+                        <a [routerLink]="'/project-role'" class="nav-caption"> {{ 'project-role' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/notification')">
+                        <a [routerLink]="'/notification'" class="nav-caption"> {{ 'notification' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/cabinet')">
+                        <a [routerLink]="'/cabinet'" class="nav-caption"> {{ 'cabinet' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="pathURL.includes('/project') && !pathURL.includes('/project-role')">
+                        <a href="" class="nav-caption"> {{prCurrent.name}} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/project/gant?id=')">
+                        <a [href]="'/project/gant?id='+prCurrent._id" class="nav-caption"> {{ 'GANTA' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/project/anketa?id=')">
+                        <a [href]="'/project/anketa?id='+prCurrent._id" class="nav-caption"> {{ 'ANKETA' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/project/Second_etap?id=')">
+                        <a [href]="'/project/2etap?id='+prCurrent._id" class="nav-caption"> {{ '2ETAP' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" *ngIf="pathURL.includes('/1etapdocs') || pathURL.includes('/spkdocs')">
+                        <a href="#" class="nav-caption"> {{ 'DOCUMENTATION' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/project/1etapdocs?id=')">
+                        <a [href]="'/project/1etapdocs?id='+prCurrent._id" class="nav-caption"> {{ '1-STAGE' | translate }} </a>
+                    </li>
+                    <li class="breadcrumb-item" *ngIf="pathURL.includes('/project/spkdocs?id=')">
+                        <a [href]="'/project/spkdocs?id='+prCurrent._id" class="nav-caption"> {{ 'SPK' | translate }} </a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<router-outlet *ngIf="!isLogged && (host+'/' == href || href == host+'/registration' || href == host+'/forgot')">
+</router-outlet>

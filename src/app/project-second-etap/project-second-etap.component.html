@@ -1,0 +1,923 @@
+<div class="sidenav-container" fxLayout="row" color="primary">
+  <div *ngIf="errorMsg" [ngClass]="'error'">{{ errorMsg }}</div>
+  <table style="font-size: 10pt; width: 100%;">
+    <tr>
+      <td align="right">
+        <b>{{ "STATUS" | translate }}:</b>
+      </td>
+      <td align="left">{{ project.status }}</td>
+      <td align="right">
+        <b>{{ "application date" | translate }}:</b>
+      </td>
+      <td align="left">{{ created }}</td>
+    </tr>
+    <tr>
+      <td align="right">
+        <b>{{ "application no" | translate }}:</b>
+      </td>
+      <td align="left">{{ project._id }}</td>
+      <td align="right">
+        <b>{{ "registration date" | translate }}:</b>
+      </td>
+      <td align="left">{{ project.dates.start }}</td>
+    </tr>
+    <tr>
+      <td align="right">
+        <b>{{ "project category" | translate }}:</b>
+      </td>
+      <td align="left">{{ categoryPr.name }}</td>
+      <td align="right">
+        <b>{{ "end date" | translate }}:</b>
+      </td>
+      <td align="left">{{ project.dates.end }}</td>
+    </tr>
+    <tr>
+      <td align="right">
+        <b>{{ "PROJECT NAME" | translate }}:</b>
+      </td>
+      <td align="left">{{ project.name }}</td>
+      <td align="right">
+        <b>{{ "PROJECT MANAGER" | translate }}:</b>
+      </td>
+      <td align="left">{{ managerPr.fio }}</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td align="right">
+        <b>{{ "MANAGER contacts" | translate }}:</b>
+      </td>
+      <td align="left">{{ managerPr.phone }}</td>
+    </tr>
+  </table>
+</div>
+<!--div class="container-fluid" style="background-color: blue;width: 100%;height: 10%;">&nbsp;<br>&nbsp;
+</div-->
+<table class="table">
+  <tr
+    align="right"
+    *ngIf="
+      (project.status2 != 'Принято' ||
+        project.status2Lawyer != 'Принято' ||
+        project.status2Financier != 'Принято') &&
+      role == 'investor'
+    "
+  >
+    <td colspan="3">
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="save()"
+      >
+        {{ "save" | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr align="right" *ngIf="project.status2 != 'Принято' && role == 'manager'">
+    <td colspan="3">
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="save()"
+      >
+        {{ "save" | translate }}
+      </button>
+    </td>
+    // @ts-ignore
+    <td *ngIf="role.toString() !== 'investor'.toString()">
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="accept()"
+      >
+        {{ "ACCEPT" | translate }}
+      </button>
+    </td>
+    // @ts-ignore
+    <td *ngIf="role.toString() !== 'investor'.toString()">
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="send()"
+      >
+        {{ "SEND EDIT" | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr *ngIf="project.status2 != 'Принято' && role == 'manager'" align="right">
+    <td colspan="3">
+      <input
+        type="text"
+        [(ngModel)]="anketaComment"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'comments' | translate }}"
+      />
+    </td>
+    <td align="right">
+      <b>{{ "date to" | translate }}:</b>
+    </td>
+    <td>
+      <input
+        type="date"
+        [(ngModel)]="anketaSrok"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'date to' | translate }}"
+      />
+      <div *ngIf="errorMsgDate" [ngClass]="'error'">{{ errorMsgDate }}</div>
+    </td>
+  </tr>
+  <tr
+    *ngIf="
+      project.status2Lawyer != 'Принято' &&
+      role == 'lawyer' &&
+      project.status2 == 'Принято' &&
+      codeEnteredLawyerBool
+    "
+    align="right"
+  >
+    <td colspan="3">
+      <input
+        type="text"
+        [(ngModel)]="codeEnteredLawyer"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'code' | translate }}"
+      />
+    </td>
+    <td>
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="acceptCodeSendLawyer()"
+      >
+        {{ "CONFIRM" | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr
+    align="right"
+    *ngIf="
+      project.status2Lawyer != 'Принято' &&
+      role == 'lawyer' &&
+      project.status2 == 'Принято'
+    "
+  >
+    <td colspan="3">
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="save()"
+      >
+        {{ "save" | translate }}
+      </button>
+    </td>
+    <td>
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="acceptLawyer()"
+      >
+        {{ "ACCEPT" | translate }}
+      </button>
+    </td>
+    <td>
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="sendLawyer()"
+      >
+        {{ "SEND EDIT" | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr
+    *ngIf="
+      project.status2Lawyer != 'Принято' &&
+      role == 'lawyer' &&
+      project.status2 == 'Принято'
+    "
+    align="right"
+  >
+    <td colspan="3">
+      <input
+        type="text"
+        [(ngModel)]="anketaCommentLawyer"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'comments' | translate }}"
+      />
+    </td>
+    <td align="right">
+      <b>{{ "date to" | translate }}:</b>
+    </td>
+    <td>
+      <input
+        type="date"
+        [(ngModel)]="anketaSrokLawyer"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'date to' | translate }}"
+      />
+      <div *ngIf="errorMsgDateLawyer" [ngClass]="'error'">
+        {{ errorMsgDateLawyer }}
+      </div>
+    </td>
+  </tr>
+  <tr
+    align="right"
+    *ngIf="
+      project.status2Financier != 'Принято' &&
+      role == 'financier' &&
+      project.status2 == 'Принято' &&
+      codeEnteredFinancierBool
+    "
+  >
+    <td colspan="3">
+      <input
+        type="text"
+        [(ngModel)]="codeEnteredFinancier"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'code' | translate }}"
+      />
+    </td>
+    <td>
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="acceptCodeSendFinancier()"
+      >
+        {{ "CONFIRM" | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr
+    align="right"
+    *ngIf="
+      project.status2Financier != 'Принято' &&
+      role == 'financier' &&
+      project.status2 == 'Принято'
+    "
+  >
+    <td colspan="3">
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="save()"
+      >
+        {{ "save" | translate }}
+      </button>
+    </td>
+    <td>
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="acceptFinancier()"
+      >
+        {{ "ACCEPT" | translate }}
+      </button>
+    </td>
+    <td>
+      <button
+        style="font-size: 8pt !important;"
+        class="btn btn-success btn-s"
+        (click)="sendFinancier()"
+      >
+        {{ "SEND EDIT" | translate }}
+      </button>
+    </td>
+  </tr>
+  <tr
+    *ngIf="
+      project.status2Financier != 'Принято' &&
+      role == 'financier' &&
+      project.status2 == 'Принято'
+    "
+    align="right"
+  >
+    <td colspan="3">
+      <input
+        type="text"
+        [(ngModel)]="anketaCommentFinancier"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'comments' | translate }}"
+      />
+    </td>
+    <td align="right">
+      <b>{{ "date to" | translate }}:</b>
+    </td>
+    <td>
+      <input
+        type="date"
+        [(ngModel)]="anketaSrokFinancier"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="{{ 'date to' | translate }}"
+      />
+      <div *ngIf="errorMsgDateFinancier" [ngClass]="'error'">
+        {{ errorMsgDateFinancier }}
+      </div>
+    </td>
+  </tr>
+  <tr *ngIf="project.anketaComments2Financier != null">
+    <td colspan="2">{{ "from financier" | translate }}</td>
+    <td colspan="2">
+      <ul>
+        <li
+          *ngFor="let item of project.anketaComments2Financier; let i = index"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </td>
+    <td>
+      {{ "date to" | translate }}: &nbsp;{{ project.anketaSrok2Financier }}
+    </td>
+  </tr>
+  <tr *ngIf="project.anketaComments2Lawyer != null">
+    <td colspan="2">{{ "from lawyer" | translate }}</td>
+    <td colspan="2">
+      <ul>
+        <li *ngFor="let item of project.anketaComments2Lawyer; let i = index">
+          {{ item }}
+        </li>
+      </ul>
+    </td>
+    <td>{{ "date to" | translate }}: &nbsp;{{ project.anketaSrok2Lawyer }}</td>
+  </tr>
+  <tr *ngIf="project.anketaComments2 != null">
+    <td colspan="2">{{ "from manager" | translate }}</td>
+    <td colspan="2">
+      <ul>
+        <li *ngFor="let item of project.anketaComments2; let i = index">
+          {{ item }}
+        </li>
+      </ul>
+    </td>
+    <td>{{ "date to" | translate }}: &nbsp;{{ project.anketaSrok2 }}</td>
+  </tr>
+  <tr
+    style="font-weight: bold; background-color: rgb(81, 56, 224); color: white;"
+  >
+    <td width="5%">
+      №
+    </td>
+    <td width="15%">{{ "NAME" | translate }}</td>
+    <td width="30%">{{ "Information" | translate }}</td>
+    <td width="30%">{{ "STATUS" | translate }}</td>
+    <td width="20%">{{ "Date" | translate }}</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>{{ "investSum" | translate }}</td>
+    <td>
+      <input
+        id="investSum"
+        type="text"
+        [(ngModel)]="project.investSum"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="investSumChanged()"
+        (click)="clearInvestSum()"
+      />
+    </td>
+    <td id="investSumStatus">
+      <ng-multiselect-dropdown
+        [data]="statuses"
+        [(ngModel)]="project.investSumStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectInvestSum($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="investSumSrok"
+        type="date"
+        [(ngModel)]="project.investSumSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="investSumSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr *ngIf="role == 'investor'">
+    <td>2</td>
+    <td>{{ "yearGrafik" | translate }}</td>
+    <td colspan="2">
+      <ng-multiselect-dropdown
+        id="yearGrafik"
+        [data]="yearGrafiks"
+        [(ngModel)]="yearGrafik"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="yearGrafikAdd"
+        style="font-size: 8pt !important;"
+        type="button"
+        class="btn btn-success"
+        value="{{ 'add' | translate }}"
+        (click)="addGrafik()"
+      />
+    </td>
+  </tr>
+  <tr *ngFor="let item of project.grafikInvest; let i = index">
+    <td></td>
+    <td>{{ item.name }}</td>
+    <td>
+      <input
+        id="{{ item.name }}Summa"
+        type="text"
+        [(ngModel)]="item.summa"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="grafikSummaChanged(item)"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="{{ item.name }}Status"
+        [data]="statuses"
+        [(ngModel)]="item.status"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectGrafik($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="{{ item.name }}Srok"
+        type="date"
+        [(ngModel)]="item.srok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="grafikSrokChanged(item)"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>NPV</td>
+    <td>
+      <input
+        id="NPV"
+        type="text"
+        [(ngModel)]="project.NPV"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="NPVchanged()"
+        (click)="clearNPV()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="NPVstatus"
+        [data]="statuses"
+        [(ngModel)]="project.NPVstatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectNPV($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="NPVsrok"
+        type="date"
+        [(ngModel)]="project.NPVsrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="NPVsrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>IRR</td>
+    <td>
+      <input
+        id="IRR"
+        type="text"
+        [(ngModel)]="project.IRR"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="IRRchanged()"
+        (click)="clearIRR()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="IRRstatus"
+        [data]="statuses"
+        [(ngModel)]="project.IRRstatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectIRR($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="IRRsrok"
+        type="date"
+        [(ngModel)]="project.IRRsrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="IRRsrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>{{ "srokOkupaemost" | translate }}</td>
+    <td>
+      <ng-multiselect-dropdown
+        placeholder="{{ 'srokOkupaemost' | translate }}"
+        [data]="periods"
+        id="srokOkupaemost"
+        [(ngModel)]="project.srokOkupaemost"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="srokOkupaemostChanged($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="srokOkupaemostStatus"
+        [data]="statuses"
+        [(ngModel)]="project.srokOkupaemostStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectSrokOkupaemost($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="srokOkupaemostSrok"
+        type="date"
+        [(ngModel)]="project.srokOkupaemostSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="srokOkupaemostSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>{{ "summaOneMeter" | translate }}</td>
+    <td>
+      <input
+        id="summaOneMeter"
+        type="text"
+        [(ngModel)]="project.summaOneMeter"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="summaOneMeterChanged()"
+        (click)="clearSummaOneMeter()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="summaOneMeterStatus"
+        [data]="statuses"
+        [(ngModel)]="project.summaOneMeterStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectSummaOneMeter($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="summaOneMeterSrok"
+        type="date"
+        [(ngModel)]="project.summaOneMeterSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="summaOneMeterSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>{{ "rentabelnost" | translate }}</td>
+    <td>
+      <input
+        id="rentabelnost"
+        type="text"
+        [(ngModel)]="project.rentabelnost"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="rentabelnostChanged()"
+        (click)="clearRentabelnost()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="rentabelnostStatus"
+        [data]="statuses"
+        [(ngModel)]="project.rentabelnostStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectRentabelnost($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="rentabelnostSrok"
+        type="date"
+        [(ngModel)]="project.rentabelnostSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="rentabelnostSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td rowspan="5">8</td>
+    <td colspan="4">{{ "financing" | translate }}</td>
+  </tr>
+  <tr>
+    <td>{{ "finansBorrowed" | translate }}</td>
+    <td>
+      <input
+        id="finansBorrowed"
+        type="text"
+        [(ngModel)]="project.finansBorrowed"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansBorrowedChanged()"
+        (click)="clearFinansBorrowed()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="finansBorrowedStatus"
+        [data]="statuses"
+        [(ngModel)]="project.finansBorrowedStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectFinansBorrowed($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="finansBorrowedSrok"
+        type="date"
+        [(ngModel)]="project.finansBorrowedSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansBorrowedSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>{{ "finansPrivate" | translate }}</td>
+    <td>
+      <input
+        id="finansPrivate"
+        type="text"
+        [(ngModel)]="project.finansPrivate"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansPrivateChanged()"
+        (click)="clearFinansPrivate()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="finansPrivateStatus"
+        [data]="statuses"
+        [(ngModel)]="project.finansPrivateStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectFinansPrivate($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="finansPrivateSrok"
+        type="date"
+        [(ngModel)]="project.finansPrivateSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansPrivateSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>{{ "finansForeign" | translate }}</td>
+    <td>
+      <input
+        id="finansForeign"
+        type="text"
+        [(ngModel)]="project.finansForeign"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansForeignChanged()"
+        (click)="clearFinansForeign()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="finansForeignStatus"
+        [data]="statuses"
+        [(ngModel)]="project.finansForeignStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectFinansForeign($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="finansForeignSrok"
+        type="date"
+        [(ngModel)]="project.finansForeignSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansForeignSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>{{ "finansState" | translate }}</td>
+    <td>
+      <input
+        id="finansState"
+        type="text"
+        [(ngModel)]="project.finansState"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansStateChanged()"
+        (click)="clearFinansState()"
+      />
+    </td>
+    <td>
+      <ng-multiselect-dropdown
+        id="finansStateStatus"
+        [data]="statuses"
+        [(ngModel)]="project.finansStateStatus"
+        [ngModelOptions]="{ standalone: true }"
+        [settings]="dropdownSettings"
+        (onSelect)="onItemSelectFinansState($event)"
+      >
+      </ng-multiselect-dropdown>
+    </td>
+    <td>
+      <input
+        id="finansStateSrok"
+        type="date"
+        [(ngModel)]="project.finansStateSrok"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="finansStateSrokChanged()"
+      />
+    </td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>{{ "expluatacia" | translate }}</td>
+    <td>
+      <input
+        id="expluatacia"
+        type="date"
+        [(ngModel)]="project.expluatacia"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="expluataciaChanged()"
+      />
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td colspan="4">{{ "grafikStroyka" | translate }}</td>
+  </tr>
+  <tr *ngFor="let item of project.grafikStroyka; let i = index">
+    <td>{{ item.name }}</td>
+    <td colspan="4">
+      <input
+        id="{{ item.name }}Note"
+        type="text"
+        placeholder="{{ 'notes' | translate }}"
+        [(ngModel)]="item.note"
+        [ngModelOptions]="{ standalone: true }"
+        (change)="noteExpluataciaChanged()"
+      />
+    </td>
+  </tr>
+</table>
+
+<table class="table">
+  <tr style="background-color: rgb(57, 226, 238)">
+    <td>{{ "S_vsego" | translate }}</td>
+    <td>{{ "S_obwaya" | translate }}</td>
+    <td>{{ "S_kondominium" | translate }}</td>
+  </tr>
+  <tr>
+    <td>{{ project.S_vsego }}</td>
+    <td>
+      <input
+        id="S_obwaya"
+        type="number"
+        [(ngModel)]="project.S_obwaya"
+        [ngModelOptions]="{ standalone: true }"
+        (click)="clearS_obwaya()"
+        (input)="plowad()"
+        (change)="S_obwayaChanged()"
+      />
+    </td>
+    <td>
+      <input
+        id="S_kondominium"
+        type="number"
+        [(ngModel)]="project.S_kondominium"
+        [ngModelOptions]="{ standalone: true }"
+        (click)="clearS_kondominium()"
+        (input)="plowad()"
+        (change)="S_kondominiumChanged()"
+      />
+    </td>
+  </tr>
+</table>
+
+<table class="table">
+  <tr style="background-color: rgb(57, 226, 238)">
+    <td>{{ "NAME" | translate }}</td>
+    <td>{{ "area" | translate }} {{ "S_obwaya" | translate }}</td>
+    <td>{{ "pie spk" | translate }} {{ "S_obwaya" | translate }}</td>
+    <td>{{ "ratio total" | translate }}</td>
+    <td>{{ "area" | translate }} {{ "S_kondominium" | translate }}</td>
+    <td>{{ "pie spk" | translate }} {{ "S_kondominium" | translate }}</td>
+    <td>{{ "itogo" | translate }}</td>
+  </tr>
+  <tr>
+    <td>{{ "jilaya" | translate }}</td>
+    <td>
+      <input
+        id="A_jilaya_plowad"
+        type="number"
+        [(ngModel)]="project.A_jilaya_plowad"
+        [ngModelOptions]="{ standalone: true }"
+        (click)="clearA_jilaya_plowad()"
+        (input)="jilaya()"
+        (change)="A_jilaya_plowadChanged()"
+      />
+    </td>
+    <td>{{ project.S1_A_dolyaSPK }}</td>
+    <td>{{ project.X1_dolyaObwaya }}</td>
+    <td>{{ project.Z1_kondominium }}</td>
+    <td>{{ project.W1_Z1_dolyaSpk }}</td>
+    <td>{{ project.S1_A_dolyaSPK + project.W1_Z1_dolyaSpk }}</td>
+  </tr>
+  <tr>
+    <td>{{ "parking" | translate }}</td>
+    <td>
+      <input
+        id="B_parking_plowad"
+        type="number"
+        [(ngModel)]="project.B_parking_plowad"
+        [ngModelOptions]="{ standalone: true }"
+        (click)="clearB_parking_plowad()"
+        (input)="parking()"
+        (change)="B_parking_plowadChanged()"
+      />
+    </td>
+    <td>{{ project.S2_B_dolyaSPK }}</td>
+    <td>{{ project.X2_dolyaObwaya }}</td>
+    <td>{{ project.Z2_kondominium }}</td>
+    <td>{{ project.W2_Z2_dolyaSpk }}</td>
+    <td>{{ project.S2_B_dolyaSPK + project.W2_Z2_dolyaSpk }}</td>
+  </tr>
+  <tr>
+    <td>{{ "commerce" | translate }}</td>
+    <td>
+      <input
+        id="C_commerce_plowad"
+        type="number"
+        [(ngModel)]="project.C_commerce_plowad"
+        [ngModelOptions]="{ standalone: true }"
+        (click)="clearC_commerce_plowad()"
+        (input)="commerce()"
+        (change)="C_commerce_plowadChanged()"
+      />
+    </td>
+    <td>{{ project.S3_C_dolyaSPK }}</td>
+    <td>{{ project.X3_dolyaObwaya }}</td>
+    <td>{{ project.Z3_kondominium }}</td>
+    <td>{{ project.W3_Z3_dolyaSpk }}</td>
+    <td>{{ project.S3_C_dolyaSPK + project.W3_Z3_dolyaSpk }}</td>
+  </tr>
+  <tr>
+    <td>{{ "itogo" | translate }}</td>
+    <td>{{ project.Itogo_plowad }}</td>
+    <td>{{ project.ABC_itogo_dolyaSPK }}</td>
+    <td></td>
+    <td>
+      {{
+        project.Z1_kondominium + project.Z2_kondominium + project.Z3_kondominium
+      }}
+    </td>
+    <td>
+      {{
+        project.W1_Z1_dolyaSpk + project.W2_Z2_dolyaSpk + project.W3_Z3_dolyaSpk
+      }}
+    </td>
+    <td>
+      {{
+        project.S1_A_dolyaSPK +
+          project.W1_Z1_dolyaSpk +
+          project.S2_B_dolyaSPK +
+          project.W2_Z2_dolyaSpk +
+          project.S3_C_dolyaSPK +
+          project.W3_Z3_dolyaSpk
+      }}
+    </td>
+  </tr>
+</table>

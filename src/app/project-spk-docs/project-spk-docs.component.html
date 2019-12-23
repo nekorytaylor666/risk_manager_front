@@ -1,0 +1,76 @@
+<div class="sidenav-container" fxLayout="row" color="primary">
+        <div *ngIf="errorMsg"  [ngClass] = "'error'"> {{errorMsg}} </div> 
+        <table style="font-size: 10pt; width: 100%;">
+          <tr>
+            <td align="right"><b>{{ 'STATUS' | translate }}:</b></td>
+            <td align="left">{{project.status}}</td>
+            <td align="right"><b>{{ 'application date' | translate }}:</b></td>
+            <td align="left">{{created}}</td>
+          </tr>
+          <tr>
+              <td align="right"><b>{{ 'application no' | translate }}:</b></td>
+              <td align="left">{{project._id}}</td>
+              <td align="right"><b>{{ 'registration date' | translate }}:</b></td>
+              <td align="left">{{project.dates.start}}</td>
+          </tr>
+          <tr>
+              <td align="right"><b>{{ 'project category' | translate }}:</b></td>
+              <td align="left">{{categoryPr.name}}</td>
+              <td align="right"><b>{{ 'end date' | translate }}:</b></td>
+              <td align="left">{{project.dates.end}}</td>
+          </tr>
+          <tr>
+              <td align="right"><b>{{ 'PROJECT NAME' | translate }}:</b></td>
+              <td align="left">{{project.name}}</td>
+              <td align="right"><b>{{ 'PROJECT MANAGER' | translate }}:</b></td>
+              <td align="left">{{managerPr.fio}}</td>
+          </tr>
+          <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td align="right"><b>{{ 'MANAGER contacts' | translate }}:</b></td>
+              <td align="left">{{managerPr.phone}}</td>
+          </tr>
+        </table>
+      </div>
+<!--div class="container-fluid" style="background-color: blue;width: 100%;height: 10%;">&nbsp;<br>&nbsp;
+</div-->
+<table class="table">
+    <tr style="font-weight: bold; background-color: rgb(81, 56, 224);  color: white;">
+        <td style="width: 5%">№</td>
+        <td style="width: 35%">{{ 'DOCUMENT' | translate }}</td>
+        <td style="width: 30%">{{ 'STAGE' | translate }}</td>
+        <td style="width: 30%">{{ 'date upload' | translate }}</td>
+    </tr>
+    <tr *ngFor="let item of project.files; let i = index">
+        <td>{{i+1}}</td>
+        <td>
+            <a href='{{urlBack}}/api/users/{{item.name}}'>{{item.name}}</a>
+        </td>
+        <td>{{project.name}}</td>
+        <td>{{item.dateD}}</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="center"><h5>{{ 'stage documents' | translate }}</h5></td>
+    </tr>
+    <tr *ngFor="let step of project.steps; let i = index">
+        <td colspan="4" *ngIf="step.files.length!=0">
+            <table>
+                <tr style="font-weight: bold; background-color: cadetblue; color: white;">
+                    <td style="width: 5%">№</td>
+                    <td style="width: 35%">{{ 'DOCUMENT' | translate }}</td>
+                    <td style="width: 30%">{{ 'STAGE' | translate }}</td>
+                    <td style="width: 30%">{{ 'date upload' | translate }}</td>
+                </tr>
+                <tr *ngFor="let item of step.files; let j = index">
+                    <td>{{j+1}}</td>
+                    <td>
+                        <a href='{{urlBack}}/api/users/{{item.name}}'>{{item.name}}</a>
+                    </td>
+                    <td>{{step.name}}</td>
+                    <td>{{item.dateD}}</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

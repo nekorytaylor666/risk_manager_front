@@ -1,0 +1,16 @@
+<table class="table">
+    <tr style="font-weight: bold; background-color: rgb(81, 56, 224); color: white;">
+        <td>№</td>
+        <td>{{ 'application no' | translate }}</td>
+        <td>{{ 'PROJECT NAME' | translate }}</td>
+        <td>{{ 'organisation name' | translate }}</td>
+        <td>{{ 'notification2' | translate }}</td>
+    </tr>
+    <tr *ngFor="let item of notifications; let i = index">
+        <td>{{i}}</td>
+        <td>{{item.projectID}}</td>
+        <td>{{item.projectName}}</td>
+        <td>{{item.projectOrganisation}}</td>
+        <td>{{item.text}}</td>
+    </tr>
+</table>

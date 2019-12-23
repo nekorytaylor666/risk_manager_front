@@ -1,0 +1,41 @@
+<div class="wrapper fadeInDown home">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <h3>{{ 'forgot password' | translate }}</h3>
+      </div>
+  
+      <!-- Login Form -->
+      <form [formGroup]="angForm" novalidate>
+        <div *ngIf="errorMsg"  [ngClass] = "'error'"> {{errorMsg}} </div> 
+        <input type="text" id="login" class="fadeIn second" name="login" placeholder="{{ 'login' | translate }}" [(ngModel)]="login" formControlName="login">
+        <div *ngIf="angForm.controls['login'].invalid && (angForm.controls['login'].dirty || angForm.controls['login'].touched)" class="alert alert-danger">
+          <div *ngIf="angForm.controls['login'].errors.required">
+            {{ 'login required' | translate }}
+          </div>
+        </div>
+        <input type="text" id="email" class="fadeIn third" name="email" placeholder="{{ 'email' | translate }}" [(ngModel)]="email" formControlName="email">
+        <div *ngIf="angForm.controls['email'].invalid && (angForm.controls['email'].dirty || angForm.controls['email'].touched)" class="alert alert-danger">
+          <div *ngIf="angForm.controls['email'].errors.required">
+            {{ 'email required' | translate }}
+          </div>
+        </div>
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="{{ 'password' | translate }}" [(ngModel)]="password" formControlName="password">
+        <div *ngIf="angForm.controls['password'].invalid && (angForm.controls['password'].dirty || angForm.controls['password'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['password'].errors.required">
+              {{ 'new password required' | translate }}
+            </div>
+        </div>
+        <input type="password" id="confirm" class="fadeIn fourth" name="confirm" placeholder="{{ 'confirm password' | translate }}" [(ngModel)]="confirm" formControlName="confirm">
+        <div *ngIf="angForm.controls['confirm'].invalid && (angForm.controls['confirm'].dirty || angForm.controls['confirm'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['confirm'].errors.required">
+              {{ 'new password required2' | translate }}
+            </div>
+        </div>
+        <input type="submit" class="fadeIn fourth" value="{{ 'change' | translate }}" (click)=checkLogin()>
+      </form>
+  
+    </div>
+  </div>

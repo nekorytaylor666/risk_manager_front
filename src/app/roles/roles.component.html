@@ -1,0 +1,141 @@
+<table class="table">
+    <tr>
+        <td>
+            <div>
+                <a style="font-size: 8pt !important;" class="btn btn-success btn-lg" [routerLink]="'/add-manager'">{{ 'add' | translate }}</a>
+                <input style="font-size: 8pt !important;" type="button" class="btn btn-success btn-lg" value="{{ 'delete' | translate }}" (click)=delete()>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <h5>{{ 'manager list' | translate }}</h5>
+                <table class="table">
+                    <tr>
+                        <td scope="col">№</td>
+                        <td scope="col">{{ 'fio' | translate }}</td>
+                        <td scope="col">{{ 'phone' | translate }}</td>
+                        <td scope="col">{{ 'project' | translate }}</td>
+                    </tr>
+                    <tr *ngFor="let item of managers; let i = index">
+                        <td scope="row"><input type="checkbox" (click)=check(item) [(ngModel)]="item.checked"></td>
+                        <td>{{item.fio}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>
+                            <ng-multiselect-dropdown
+                            placeholder="{{ 'project' | translate }}"
+                            [data]="projects"
+                            [(ngModel)]="item.projects"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)"
+                            >
+                            </ng-multiselect-dropdown>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="formFooter">
+                <input style="font-size: 8pt !important;" type="button" value="{{ 'distribute' | translate }}" class="btn btn-lg btn-second" (click)=manageProjects()>
+                <input style="font-size: 8pt !important;" type="button" class="btn btn-warning btn-lg" value="{{ 'save' | translate }}" (click)=save()>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <a style="font-size: 8pt !important;" class="btn btn-success btn-lg" [routerLink]="'/add-lawyer'">{{ 'add' | translate }}</a>
+                <input style="font-size: 8pt !important;" type="button" class="btn btn-success btn-lg" value="{{ 'delete' | translate }}" (click)=deleteLawyer()>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <h5>{{ 'lawyer list' | translate }}</h5>
+                <table class="table">
+                    <tr>
+                        <td scope="col">№</td>
+                        <td scope="col">{{ 'fio' | translate }}</td>
+                        <td scope="col">{{ 'phone' | translate }}</td>
+                        <td scope="col">{{ 'project' | translate }}</td>
+                    </tr>
+                    <tr *ngFor="let item of lawyers; let i = index">
+                        <td scope="row"><input type="checkbox" (click)=checkLawyer(item) [(ngModel)]="item.checked"></td>
+                        <td>{{item.fio}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>
+                            <ng-multiselect-dropdown
+                            placeholder="{{ 'project' | translate }}"
+                            [data]="projects"
+                            [(ngModel)]="item.projects"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)"
+                            >
+                            </ng-multiselect-dropdown>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="formFooter">
+                <input style="font-size: 8pt !important;" type="button" class="btn btn-warning btn-lg" value="{{ 'save' | translate }}" (click)=saveLawyer()>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <a style="font-size: 8pt !important;" class="btn btn-success btn-lg" [routerLink]="'/add-financier'">{{ 'add' | translate }}</a>
+                <input style="font-size: 8pt !important;" type="button" class="btn btn-success btn-lg" value="{{ 'delete' | translate }}" (click)=deleteFinancier()>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <h5>{{ 'financier list' | translate }}</h5>
+                <table class="table">
+                    <tr>
+                        <td scope="col">№</td>
+                        <td scope="col">{{ 'fio' | translate }}</td>
+                        <td scope="col">{{ 'phone' | translate }}</td>
+                        <td scope="col">{{ 'project' | translate }}</td>
+                    </tr>
+                    <tr *ngFor="let item of financiers; let i = index">
+                        <td scope="row"><input type="checkbox" (click)=checkFinancier(item) [(ngModel)]="item.checked"></td>
+                        <td>{{item.fio}}</td>
+                        <td>{{item.phone}}</td>
+                        <td>
+                            <ng-multiselect-dropdown
+                            placeholder="{{ 'project' | translate }}"
+                            [data]="projects"
+                            [(ngModel)]="item.projects"
+                            [settings]="dropdownSettings"
+                            (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)"
+                            >
+                            </ng-multiselect-dropdown>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="formFooter">
+                <input style="font-size: 8pt !important;" type="button" class="btn btn-warning btn-lg" value="{{ 'save' | translate }}" (click)=saveFinancier()>
+            </div>
+        </td>
+    </tr>
+</table>

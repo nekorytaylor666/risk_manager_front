@@ -1,0 +1,23 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+    
+        <!-- Icon -->
+        <div class="fadeIn first">
+        <h3>{{ 'new project role' | translate }}</h3>
+        </div>
+    
+        <!-- Login Form -->
+        <form [formGroup]="angForm" novalidate>
+            <div *ngIf="errorMsg"  [ngClass] = "'error'"> {{errorMsg}} </div> 
+            <input type="text" id="name" class="fadeIn second" name="name" placeholder="{{ 'name' | translate }}" [(ngModel)]="name" formControlName="name">
+            <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
+                <div *ngIf="angForm.controls['name'].errors.required">
+                    {{ 'name required' | translate }}
+                </div>
+            </div>
+            <input type="submit" class="fadeIn fourth" value="{{ 'add' | translate }}" (click)=add()>
+        </form>
+
+    </div>
+</div>

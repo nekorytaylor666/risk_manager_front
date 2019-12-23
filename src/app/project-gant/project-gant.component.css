@@ -1,0 +1,119 @@
+.sidenav {
+  width: 400px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.sidenav-content {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow-x: auto;
+}
+
+[mwlResizable] {
+  border-right: 3px solid #BDBDBD;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.sidenav-header {
+  text-align: center;
+  line-height: 48px;
+  height: 48px;
+  min-height: 48px;
+  border-width: 1px 3px 1px 0;
+  border-color: #BDBDBD;
+  border-style: solid;
+}
+
+::ng-deep mat-tree-node {
+  height: 50px;
+  min-height: 50px;
+}
+
+/** names */
+.sidenav.names mat-tree.tree {
+  padding-top: 14px;
+}
+
+/** date picker */
+.sidenav.date-pickers {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 250px;
+          flex: 0 0 250px;
+}
+
+.sidenav.date-pickers mat-tree.tree {
+  padding-top: 14px;
+  border-width: 0 3px 0 0;
+  border-color: #BDBDBD;
+  border-style: solid;
+}
+
+.sidenav.date-pickers mat-tree.tree mat-tree-node {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.sidenav.date-pickers mat-tree.tree mat-tree-node mat-form-field {
+  width: 100px;
+}
+
+/** progress */
+.sidenav.progress-bars {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 200px;
+          flex: 0 0 200px;
+}
+
+.sidenav.progress-bars mat-tree.tree {
+  padding-top: 8px;
+  border-width: 0 3px 0 0;
+  border-color: #BDBDBD;
+  border-style: solid;
+}
+
+::ng-deep mat-slider.progress {
+  margin: 0 10px;
+  width: 100%;
+  height: unset;
+}
+
+/** calendar */
+::ng-deep .calendar-header {
+  height: 50px;
+  min-height: 50px;
+}
+
+::ng-deep mat-tree-node.calendar-row {
+  overflow: unset;
+}
+
+::ng-deep .calendar-cell {
+  text-align: center;
+  line-height: 49px;
+  width: 58px;
+  height: 49px;
+  min-width: 58px;
+  min-height: 49px;
+  border-width: 0.5px 1px;
+  border-color: #BDBDBD;
+  border-style: solid;
+}
+
+::ng-deep .calendar-cell.today {
+  border-color: #FF9800;
+  border-width: 0.5px 5px;
+}
+
+::ng-deep .calendar-cell[date-filled=true][date-inside=true] {
+  background-color: #2196F3;
+}
+
+::ng-deep .calendar-cell[date-filled=false][date-inside=true] {
+  background-color: #9E9E9E;
+}
+/*# sourceMappingURL=project-gant.component.css.map */

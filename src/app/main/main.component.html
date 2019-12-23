@@ -1,0 +1,285 @@
+<table>
+  <tr>
+    <td rowspan="2">
+      <div class="wrapper fadeInDown">
+        <div id="formContent">
+          <!-- Tabs Titles -->
+
+          <!-- Icon -->
+          <div class="fadeIn first">
+            <h3>{{ "choose criteria" | translate }}</h3>
+          </div>
+
+          <!-- Login Form -->
+          <form novalidate>
+            <div *ngIf="errorMsg" [ngClass]="'error'">{{ errorMsg }}</div>
+            <div class="form-group">
+              <ng-multiselect-dropdown
+                class="fadeIn second"
+                placeholder="{{ 'choose stage' | translate }}"
+                [data]="etaps"
+                [(ngModel)]="etap"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+                (onSelect)="onItemSelectEtap($event)"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group">
+              <ng-multiselect-dropdown
+                class="fadeIn second"
+                placeholder="{{ 'choose category' | translate }}"
+                [data]="categories"
+                [(ngModel)]="category"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings2"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group" *ngIf="showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn third"
+                placeholder="{{ 'choose city' | translate }}"
+                [data]="cities"
+                [(ngModel)]="city"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+                (onSelect)="onItemSelectCity($event)"
+                (onSelectAll)="onSelectAllCity($event)"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group" *ngIf="showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn fourth"
+                placeholder="{{ 'choose region' | translate }}"
+                [data]="regions"
+                [(ngModel)]="region"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group" *ngIf="showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn fifth"
+                placeholder="{{ 'project price' | translate }}"
+                [data]="prices"
+                [(ngModel)]="price"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <label *ngIf="showRealizovan">{{
+              "application date" | translate
+            }}</label>
+            <div class="form-group" *ngIf="showRealizovan">
+              <label>{{ "from" | translate }}&nbsp;&nbsp;</label>
+              <input
+                type="date"
+                class="fadeIn sixth"
+                placeholder="{{ 'from' | translate }}"
+                [(ngModel)]="zayavkaStart"
+              />
+            </div>
+            <div class="form-group" *ngIf="showRealizovan">
+              <label>{{ "to" | translate }}&nbsp;&nbsp;</label>
+              <input
+                type="date"
+                class="fadeIn sixth"
+                placeholder="{{ 'to' | translate }}"
+                [(ngModel)]="zayavkaEnd"
+              />
+            </div>
+            <label *ngIf="showRealizovan">{{ "land area" | translate }}</label>
+            <div class="form-group" *ngIf="showRealizovan">
+              <label>{{ "from" | translate }} &nbsp;&nbsp;</label>
+              <input
+                type="number"
+                class="fadeIn seventh"
+                placeholder="{{ 'from' | translate }}"
+                [(ngModel)]="areaStart"
+              />
+            </div>
+            <div class="form-group" *ngIf="showRealizovan">
+              <label>{{ "to" | translate }} &nbsp;&nbsp;</label>
+              <input
+                type="number"
+                class="fadeIn seventh"
+                placeholder="{{ 'to' | translate }}"
+                [(ngModel)]="areaEnd"
+              />
+            </div>
+            <label *ngIf="showNot1etap">Площадь застройки, кв.м.</label>
+            <div class="form-group" *ngIf="showNot1etap">
+              <label>{{ "from" | translate }} &nbsp;&nbsp;</label>
+              <input
+                type="number"
+                class="fadeIn eighth"
+                placeholder="{{ 'from' | translate }}"
+                [(ngModel)]="areaZastroikaStart"
+              />
+            </div>
+            <div class="form-group" *ngIf="showNot1etap">
+              <label>{{ "to" | translate }} &nbsp;&nbsp;</label>
+              <input
+                type="number"
+                class="fadeIn eighth"
+                placeholder="{{ 'to' | translate }}"
+                [(ngModel)]="areaZastroikaEnd"
+              />
+            </div>
+            <div class="form-group" *ngIf="showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn eighth"
+                placeholder="{{ 'organisation' | translate }}"
+                [data]="organisations"
+                [(ngModel)]="organisation"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group" *ngIf="show2etap && showRealizovan">
+              <label>{{ "invest sum" | translate }} &nbsp;&nbsp;</label>
+              <input
+                type="number"
+                class="fadeIn eighth"
+                placeholder="{{ 'invest sum' | translate }}"
+                [(ngModel)]="invest"
+              />
+            </div>
+            <div class="form-group" *ngIf="show2etap && showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn eighth"
+                placeholder="{{ 'financing' | translate }}"
+                [data]="finances"
+                [(ngModel)]="finance"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <label *ngIf="show2etap && showRealizovan">{{
+              "grafik invest" | translate
+            }}</label>
+            <div class="form-group" *ngIf="show2etap && showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn eighth"
+                placeholder="{{ 'from' | translate }}"
+                [data]="grafiks"
+                [(ngModel)]="grafikStart"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings3"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group" *ngIf="show2etap && showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn eighth"
+                placeholder="{{ 'to' | translate }}"
+                [data]="grafiks"
+                [(ngModel)]="grafikEnd"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings3"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group" *ngIf="show2etap && showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn eighth"
+                placeholder="{{ 'srokOkupaemost' | translate }}"
+                [data]="periods"
+                [(ngModel)]="period"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <label *ngIf="show2etap && showRealizovan">{{
+              "expluatacia" | translate
+            }}</label>
+            <div class="form-group" *ngIf="show2etap">
+              <label>{{ "from" | translate }} &nbsp;&nbsp;</label>
+              <input
+                type="date"
+                class="fadeIn sixth"
+                placeholder="{{ 'from' | translate }}"
+                [(ngModel)]="vvodStart"
+              />
+            </div>
+            <div class="form-group" *ngIf="show2etap && showRealizovan">
+              <label>{{ "to" | translate }} &nbsp;&nbsp;</label>
+              <input
+                type="date"
+                class="fadeIn sixth"
+                placeholder="{{ 'to' | translate }}"
+                [(ngModel)]="vvodEnd"
+              />
+            </div>
+            <div class="form-group" *ngIf="show2etap && showRealizovan">
+              <ng-multiselect-dropdown
+                class="fadeIn eighth"
+                placeholder="{{ 'dolya spk biznes' | translate }}"
+                [data]="piesSpk"
+                [(ngModel)]="dolyaSpk"
+                [ngModelOptions]="{ standalone: true }"
+                [settings]="dropdownSettings"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+
+            <input
+              type="submit"
+              class="fadeIn ninth"
+              value="{{ 'analiz' | translate }}"
+              (click)="analiz()"
+            />
+          </form>
+        </div>
+      </div>
+    </td>
+    <td>
+      <!--google-chart #chart
+            [title]="titleC"
+            [type]="type"
+            [data]="data"
+            [columnNames]="columnNames"
+            [width]="width"
+            [height]="height">
+            </google-chart-->
+      <!--google-chart [data]="pieChart"></google-chart-->
+      <div id="chartdiv" style="width: 600px; height: 500px;"></div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <table class="table">
+        <tr align="right">
+          <td colspan="4">
+            <button
+              mat-icon-button
+              (click)="download()"
+              style="color: blue;font-size: 8pt !important;"
+            >
+              <mat-icon>get_app</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td scope="col">{{ "PROJECT NAME" | translate }}</td>
+          <td scope="col">{{ "LLP NAME" | translate }}</td>
+          <td scope="col">{{ "land area" | translate }}</td>
+          <td scope="col">{{ "project price" | translate }}</td>
+        </tr>
+        <tr *ngFor="let item of projects; let i = index">
+          <td scope="row">{{ item.name }}</td>
+          <td>{{ item.organisation }}</td>
+          <td>{{ item.landRequested }}</td>
+          <td>{{ item.itogoTotal }}</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

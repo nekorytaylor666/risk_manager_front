@@ -1,0 +1,573 @@
+<div class="wrapper fadeInDown"><!-- -->
+    <div id="formContent"><!-- id="formContent"-->
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <h3>{{ 'ZAYAVKA TITLE' | translate }}</h3>
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="angForm">
+        <div *ngIf="errorMsg" [ngClass] = "'error'"> {{errorMsg}} </div> 
+        <div class="form-group">
+          <label for="name">{{ 'PROJECT NAME' | translate }}</label>
+          <input type="text" id="name" class="form-control fadeIn second" name="name" placeholder="{{ 'PROJECT NAME' | translate }}" [(ngModel)]="name" formControlName="name">
+          <div *ngIf="angForm.controls['name'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['name'].errors.required">
+              {{ 'PROJECT NAME required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category">{{ 'choose category' | translate }}</label>
+          <ng-multiselect-dropdown
+          class="fadeIn third"
+          placeholder="{{ 'choose category' | translate }}"
+          [data]="categories"
+          [(ngModel)]="category"
+          [settings]="dropdownSettings"
+          (onSelect)="onItemSelectCategory($event)"
+          (onSelectAll)="onSelectAll($event)"
+          formControlName="category"
+          >
+          </ng-multiselect-dropdown>
+          <div *ngIf="angForm.controls['category'].invalid && (angForm.controls['category'].dirty || angForm.controls['category'].touched)" class="alert alert-danger">
+              <div *ngIf="angForm.controls['category'].errors.required">
+                  {{ 'category required' | translate }}
+              </div>
+          </div>
+        </div>
+        <div class="fadeIn fourth">
+            <h5>{{ 'initiator info' | translate }}</h5>
+        </div>
+        <div class="form-group">
+          <label for="bin">1.1. {{ 'bin' | translate }}: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="bin" class="form-control fadeIn fifth" name="bin" placeholder="1.1. {{ 'bin' | translate }}:" [(ngModel)]="bin" formControlName="bin" (ngModelChange)="binService()">
+          <div *ngFor="let validation of account_validation_messages.bin">
+            <div *ngIf="angForm.get('bin').hasError(validation.type)" class="alert alert-danger">
+              {{validation.message | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="organisation">1.2. {{ 'organisation name' | translate }}:</label>
+          <input type="text" id="organisation" class="form-control fadeIn sixth" name="organisation" placeholder="1.2. {{ 'organisation name' | translate }}:" [(ngModel)]="organisation" formControlName="organisation">
+          <div *ngIf="angForm.controls['organisation'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['organisation'].errors.required">
+              {{ 'organisation required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address">1.3. {{ 'address' | translate }}:</label>
+          <input type="text" id="address" class="form-control fadeIn seventh" name="address" placeholder="1.3. {{ 'address' | translate }}:" [(ngModel)]="address" formControlName="address">
+          <div *ngIf="angForm.controls['address'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['address'].errors.required">
+              {{ 'address required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">1.4. {{ 'phone' | translate }}:</label>
+          <input type="text" id="phone" class="form-control fadeIn eighth" name="phone" placeholder="1.4. {{ 'phone' | translate }}:" [(ngModel)]="phone" formControlName="phone">
+          <div *ngIf="angForm.controls['phone'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['phone'].errors.required">
+              {{ 'phone required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">1.5. E-mail: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="email" class="form-control fadeIn ninth" name="email" placeholder="1.5. E-mail:" [(ngModel)]="email" formControlName="email">
+          <div *ngFor="let validation of account_validation_messages.email">
+            <div *ngIf="angForm.get('email').hasError(validation.type)" class="alert alert-danger">
+              {{validation.message | translate}}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="web">1.6. Web-site:</label>
+          <input type="text" id="web" class="form-control fadeIn tenth" name="web" placeholder="1.6. Web-site:" [(ngModel)]="web" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="form-group">
+          <label for="registration">1.7. {{ 'registration' | translate }}:</label>
+          <input type="date" id="registration" class="form-control fadeIn eleventh" name="registration" placeholder="1.7. {{ 'registration' | translate }}:" [(ngModel)]="registration" formControlName="registration">
+          <div *ngIf="angForm.controls['registration'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['registration'].errors.required">
+              {{ 'registration required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fioDirector">1.8. {{ 'fioDirector' | translate }}:</label>
+          <input type="text" id="fioDirector" class="form-control fadeIn twelfth" name="fioDirector" placeholder="1.8. {{ 'fioDirector' | translate }}:" [(ngModel)]="fioDirector" formControlName="fioDirector">
+          <div *ngIf="angForm.controls['fioDirector'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['fioDirector'].errors.required">
+              {{ 'fioDirector required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="project_role">1.9. {{ 'project_role' | translate }}:</label>
+          <ng-multiselect-dropdown
+          class="fadeIn thirteenth"
+          placeholder="{{ 'choose' | translate}}"
+          [data]="pr_roles"
+          [(ngModel)]="project_role"
+          [settings]="dropdownSettings"
+          (onSelectAll)="onSelectAll($event)"
+          formControlName="project_role"
+          >
+          </ng-multiselect-dropdown>
+          <div *ngIf="angForm.controls['project_role'].invalid && (angForm.controls['project_role'].dirty || angForm.controls['project_role'].touched)" class="alert alert-danger">
+              <div *ngIf="angForm.controls['project_role'].errors.required">
+                  {{ 'project_role required' | translate }}
+              </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>1.10. {{ 'financial description' | translate }}: </label>
+          <label for="personalCount">{{ 'personalCount' | translate }}:</label>
+          <input type="text" id="personalCount" class="form-control fadeIn fourteenth" name="personalCount" placeholder="{{ 'personalCount' | translate }}:" [(ngModel)]="personalCount" formControlName="personalCount">
+          <div *ngIf="angForm.controls['personalCount'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['personalCount'].errors.required">
+              {{ 'personalCount required' | translate }}
+            </div>
+          </div>
+        </div>
+        <br>
+        <label><b>{{ 'financial forms' | translate }}:</b></label>
+        <div class="form-group">
+          <h6>{{ 'financialReport1' | translate }}</h6>
+          <div class="container">
+            <input type="file" ng2FileSelect [uploader]="financialReport1" formControlName="financialReport1"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="financialReport1.uploadAll()" 
+              [disabled]="!financialReport1.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="financialReport1.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <h6>{{ 'financialReport2' | translate }}</h6>
+          <div class="container">
+            <input type="file" ng2FileSelect [uploader]="financialReport2" formControlName="financialReport2"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="financialReport2.uploadAll()" 
+              [disabled]="!financialReport2.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="financialReport2.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <h6>{{ 'financialReport3' | translate }}</h6>
+          <div class="container">
+            <input type="file" ng2FileSelect [uploader]="financialReport3" formControlName="financialReport3"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="financialReport3.uploadAll()" 
+              [disabled]="!financialReport3.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="financialReport3.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <h6>{{ 'descriptionNote1' | translate }}</h6>
+          <div class="container">
+            <input type="file" ng2FileSelect [uploader]="descriptionNote1" formControlName="descriptionNote1"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="descriptionNote1.uploadAll()" 
+              [disabled]="!descriptionNote1.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="descriptionNote1.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <h6>{{ 'descriptionNote2' | translate }}</h6>
+          <div class="container">
+            <input type="file" ng2FileSelect [uploader]="descriptionNote2" formControlName="descriptionNote2"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="descriptionNote2.uploadAll()" 
+              [disabled]="!descriptionNote2.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="descriptionNote2.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <h6>{{ 'descriptionNote3' | translate }}</h6>
+          <div class="container">
+            <input type="file" ng2FileSelect [uploader]="descriptionNote3" formControlName="descriptionNote3"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="descriptionNote3.uploadAll()" 
+              [disabled]="!descriptionNote3.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="descriptionNote3.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <label><b>{{ 'upload garantyLetter' | translate }}:</b></label>
+        <div class="form-group">
+          <h6>{{ 'garantyLetter' | translate }}</h6>
+          <div class="container">
+            <input type="file" name="garantyLetter" ng2FileSelect [uploader]="garantyLetter" formControlName="garantyLetter"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="garantyLetter.uploadAll()" 
+              [disabled]="!garantyLetter.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="garantyLetter.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <div>
+          <h5>1. {{ 'project description' | translate}}</h5>
+          <h5>1.1. {{ 'project realisation' | translate }}:</h5>
+        </div>
+        <div class="form-group">
+          <label for="ProjectDescription">{{ 'project description' | translate}}</label>
+          <input type="text" id="ProjectDescription" name="ProjectDescription" placeholder="{{ 'project description' | translate}}" [(ngModel)]="ProjectDescription" formControlName="ProjectDescription">
+          <div *ngIf="angForm.controls['ProjectDescription'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['ProjectDescription'].errors.required">
+              {{ 'project description required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ProjectAim">{{ 'ProjectAim' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="ProjectAim" class="form-control" name="ProjectAim" placeholder="{{ 'ProjectAim' | translate }}" [(ngModel)]="ProjectAim" formControlName="ProjectAim">
+        </div>
+        <div class="form-group">
+          <label for="ProjectInnovation">{{ 'ProjectInnovation' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="ProjectInnovation" class="form-control" name="ProjectInnovation" placeholder="{{ 'ProjectInnovation' | translate }}" [(ngModel)]="ProjectInnovation" formControlName="ProjectInnovation">
+        </div>
+        <div class="form-group">
+          <label for="ProjectUniqueness">{{ 'ProjectUniqueness' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="ProjectUniqueness" class="form-control" name="ProjectUniqueness" placeholder="{{ 'ProjectUniqueness' | translate }}" [(ngModel)]="ProjectUniqueness" formControlName="ProjectUniqueness">
+          <div *ngIf="angForm.controls['ProjectUniqueness'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['ProjectUniqueness'].errors.required">
+              {{ 'ProjectUniqueness required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ProjectApplication">{{ 'ProjectApplication' | translate }}</label>
+          <input type="text" id="ProjectApplication" class="form-control" name="ProjectApplication" placeholder="{{ 'ProjectApplication' | translate }}" [(ngModel)]="ProjectApplication" formControlName="ProjectApplication">
+        </div>
+        <div class="form-group">
+          <label for="ProjectPerspective">{{ 'ProjectPerspective' | translate }}</label>
+          <input type="text" id="ProjectPerspective" class="form-control" name="ProjectPerspective" placeholder="{{ 'ProjectPerspective' | translate }}" [(ngModel)]="ProjectPerspective" formControlName="ProjectPerspective">
+        </div>
+        <div class="form-group">
+          <label for="companyInfo">{{ 'companyInfo' | translate }}</label>
+          <input type="text" id="companyInfo" class="form-control" name="companyInfo" placeholder="{{ 'companyInfo' | translate }}" [(ngModel)]="companyInfo" formControlName="companyInfo">
+          <div *ngIf="angForm.controls['companyInfo'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['companyInfo'].errors.required">
+              {{ 'companyInfo required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ProjectLeaderDescription">{{ 'ProjectLeaderDescription' | translate }}</label>
+          <input type="text" id="ProjectLeaderDescription" class="form-control" name="ProjectLeaderDescription" placeholder="{{ 'ProjectLeaderDescription' | translate }}" [(ngModel)]="ProjectLeaderDescription" formControlName="ProjectLeaderDescription">
+        </div>
+        <div class="form-group">
+          <label for="participationOfParties">{{ 'participationOfParties' | translate }}:</label>
+          <input type="text" id="participationOfParties" class="form-control" name="participationOfParties" placeholder="{{ 'participationOfParties' | translate }}" [(ngModel)]="participationOfParties" formControlName="participationOfParties">
+        </div>
+        <div class="form-group">
+          <label for="Innovations">{{ 'Innovations' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="Innovations" class="form-control" name="Innovations" placeholder="{{ 'Innovations' | translate }}" [(ngModel)]="Innovations" formControlName="Innovations">
+          <div *ngIf="angForm.controls['Innovations'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['Innovations'].errors.required">
+              {{ 'Innovations required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div>
+          <table  class="table">
+            <tr>
+              <td scope="col"><b>{{ 'articles' | translate }}</b></td>
+              <td scope="col"><b>{{ 'costs' | translate }}</b></td>
+              <td scope="col"><b>{{ 'spk' | translate }}</b></td>
+              <td scope="col"><b>{{ 'initiator' | translate }}</b></td>
+              <td scope="col"><b>{{ 'funds' | translate }}</b></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'land' | translate }}</td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="landTotal" formControlName="landTotal"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="landSpkAstana" formControlName="landSpkAstana"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="landInitiator" formControlName="landInitiator"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="landInvested" formControlName="landInvested"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'construction' | translate }}</td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="buildingTotal" formControlName="buildingTotal"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="buildingSpkAstana" formControlName="buildingSpkAstana"></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=remont() [(ngModel)]="buildingInitiator" formControlName="buildingInitiator" (click)=clear_buildingInitiator()></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=remont() [(ngModel)]="buildingInvested" formControlName="buildingInvested" (click)=clear_buildingInvested()></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'technika' | translate }}</td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="technicaTotal" formControlName="technicaTotal"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="technicaSpkAstana" formControlName="technicaSpkAstana"></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=tehnika() [(ngModel)]="technicaInitiator" formControlName="technicaInitiator" (click)=clear_technicaInitiator()></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=tehnika() [(ngModel)]="technicaInvested" formControlName="technicaInvested" (click)=clear_technicaInvested()></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'oborot' | translate }}</td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="oborotTotal" formControlName="oborotTotal"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="oborotSpkAstana" formControlName="oborotSpkAstana"></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=oborot() [(ngModel)]="oborotInitiator" formControlName="oborotInitiator" (click)=clear_oborotInitiator()></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=oborot() [(ngModel)]="oborotInvested" formControlName="oborotInvested" (click)=clear_oborotInvested()></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'other' | translate }}</td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="otherTotal" formControlName="otherTotal"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="otherSpkAstana" formControlName="otherSpkAstana"></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=other() [(ngModel)]="otherInitiator" formControlName="otherInitiator" (click)=clear_otherInitiator()></td>
+              <td>*<input required type="number" class="table-input form-control" (input)=other() [(ngModel)]="otherInvested" formControlName="otherInvested" (click)=clear_otherInvested()></td>
+            </tr>
+            <tr>
+              <td scope="row"><b>{{ 'itogo' | translate }}</b></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="itogoTotal" formControlName="itogoTotal"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="itogoSpkAstana" formControlName="itogoSpkAstana"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="itogoInitiator" formControlName="itogoInitiator"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="itogoInvested" formControlName="itogoInvested"></td>
+            </tr>
+            <tr>
+              <td scope="row"><b>{{ 'dolya' | translate }}</b></td>
+              <td><input required disabled type="text" class="table-input form-control" name="dolyaTotal" [(ngModel)]="dolyaTotal" formControlName="dolyaTotal"></td>
+              <td><input required disabled type="text" class="table-input form-control" name="dolyaSpkAstana" [(ngModel)]="dolyaSpkAstana" formControlName="dolyaSpkAstana"></td>
+              <td><input required disabled type="text" class="table-input form-control" name="dolyaInitiator" [(ngModel)]="dolyaInitiator" formControlName="dolyaInitiator"></td>
+              <td><input required disabled type="text" class="table-input form-control" name="dolyaInvested" [(ngModel)]="dolyaInvested" formControlName="dolyaInvested"></td>
+            </tr>
+          </table>
+          <div *ngIf="angForm.controls['landTotal'].invalid || angForm.controls['landSpkAstana'].invalid || angForm.controls['landInitiator'].invalid
+          || angForm.controls['landInvested'].invalid || angForm.controls['buildingTotal'].invalid || angForm.controls['buildingSpkAstana'].invalid
+          || angForm.controls['buildingInitiator'].invalid || angForm.controls['buildingInvested'].invalid || angForm.controls['technicaTotal'].invalid
+          || angForm.controls['technicaSpkAstana'].invalid || angForm.controls['technicaInitiator'].invalid || angForm.controls['technicaInvested'].invalid
+          || angForm.controls['oborotTotal'].invalid || angForm.controls['oborotSpkAstana'].invalid || angForm.controls['oborotInitiator'].invalid
+          || angForm.controls['oborotInvested'].invalid || angForm.controls['otherTotal'].invalid || angForm.controls['otherSpkAstana'].invalid
+          || angForm.controls['otherInitiator'].invalid || angForm.controls['otherInvested'].invalid || angForm.controls['itogoTotal'].invalid
+          || angForm.controls['itogoSpkAstana'].invalid || angForm.controls['itogoInitiator'].invalid || angForm.controls['itogoInvested'].invalid
+          || angForm.controls['dolyaTotal'].invalid || angForm.controls['dolyaSpkAstana'].invalid || angForm.controls['dolyaInitiator'].invalid
+          || angForm.controls['dolyaInvested'].invalid" class="alert alert-danger">
+          {{ 'required' | translate }}
+          </div>
+        </div>
+        <div>
+          <h5>2.2. {{ 'results' | translate }}</h5>
+        </div>
+        <div>
+          <table  class="table">
+            <tr>
+              <td scope="col"><b>{{ 'indicators' | translate }}</b></td>
+              <td scope="col"><b>{{ 'monthly' | translate }}</b></td>
+              <td scope="col"><b>{{ 'yearly' | translate }}</b></td>
+              <td scope="col">
+                <b>{{ 'period' | translate }}</b>
+                <input required type="number" class="table-input" (input)=period() name="totalPeriod" [(ngModel)]="totalPeriod" formControlName="totalPeriod" max="12" min="1">
+                <b>{{ 'year' | translate }}</b>
+                <div *ngFor="let validation of account_validation_messages.totalPeriod">
+                  <div *ngIf="angForm.get('totalPeriod').hasError(validation.type)" class="alert alert-danger">
+                    {{validation.message | translate }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'revenue' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=vyruchka() name="valovayaVyruchka" [(ngModel)]="valovayaVyruchka" formControlName="valovayaVyruchka" (click)=clear_valovayaVyruchka()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="valovayaVyruchkaYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="valovayaVyruchkaPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'production' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=production() name="valovoyProduction" [(ngModel)]="valovoyProduction" formControlName="valovoyProduction" (click)=clear_valovoyProduction()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="valovoyProductionYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="valovoyProductionPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'costsProd' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=rashodyProd() name="rashodyProduction" [(ngModel)]="rashodyProduction" formControlName="rashodyProduction" (click)=clear_rashodyProduction()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="rashodyProductionYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="rashodyProductionPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'operational' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=operational() name="operationalProfit" [(ngModel)]="operationalProfit" formControlName="operationalProfit" (click)=clear_operationalProfit()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="operationalProfitYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="operationalProfitPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'obyazatelstv' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=obyazatelstv() name="pogashenieObyazatelstv" [(ngModel)]="pogashenieObyazatelstv" formControlName="pogashenieObyazatelstv" (click)=clear_pogashenieObyazatelstv()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="pogashenieObyazatelstvYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="pogashenieObyazatelstvPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'otherRashody' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=otherR() name="otherRashody" [(ngModel)]="otherRashody" formControlName="otherRashody" (click)=clear_otherRashody()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="otherRashodyYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="otherRashodyPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'tax' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=tax() name="taxes" [(ngModel)]="taxes" formControlName="taxes" (click)=clear_taxes()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="taxesYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="taxesPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'profit' | translate }}</td>
+              <td>*<input required type="number" class="table-input form-control" (input)=prof() name="profit" [(ngModel)]="profit" formControlName="profit" (click)=clear_profit()></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="profitYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input required disabled type="text" class="table-input form-control" [(ngModel)]="profitPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+          </table>
+          <div *ngIf="angForm.controls['valovayaVyruchka'].invalid
+          || angForm.controls['valovoyProduction'].invalid
+          || angForm.controls['rashodyProduction'].invalid
+          || angForm.controls['operationalProfit'].invalid
+          || angForm.controls['pogashenieObyazatelstv'].invalid
+          || angForm.controls['otherRashody'].invalid
+          || angForm.controls['taxes'].invalid
+          || angForm.controls['profit'].invalid" class="alert alert-danger">
+          {{ 'required' | translate }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="notes"><b>{{ 'notes' | translate }}:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input required type="text" id="notes" class="form-control" name="notes" placeholder="{{ 'notes' | translate }}:" [(ngModel)]="notes" formControlName="notes">
+          <div *ngIf="angForm.controls['notes'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['notes'].errors.required">
+              {{ 'notes required' | translate }}
+            </div>
+          </div>
+        </div>
+        <label>** {{ 'notes **' | translate }}</label>
+        <label>*** {{ 'notes ***' | translate }}</label>
+        <div>
+          <h5>2.3. {{ 'proposals and wishes' | translate }}</h5>
+          <div style="text-align: justify">
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'project realisation2' | translate }} 
+            <input required style="width: 15%" type="text" class="table-input form-control" name="landRequested" [(ngModel)]="landRequested" formControlName="landRequested"/>
+            <div *ngIf="angForm.controls['landRequested'].invalid" class="alert alert-danger">
+              <div *ngIf="angForm.controls['landRequested'].errors.required">
+                {{ 'enter required' | translate }}
+              </div>
+            </div>
+            {{ 'in city' | translate }}
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'text1' | translate }}
+            <input required style="width: 15%" type="text" class="table-input form-control" name="landRequestedAddress" [(ngModel)]="landRequestedAddress" formControlName="landRequestedAddress"/>
+            <div *ngIf="angForm.controls['landRequestedAddress'].invalid" class="alert alert-danger">
+              <div *ngIf="angForm.controls['landRequestedAddress'].errors.required">
+                {{ 'enter required' | translate }}
+              </div>
+            </div>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'text2' | translate }}
+            <input required style="width: 15%" type="text" class="table-input form-control" name="placementRequest" [(ngModel)]="placementRequest" formControlName="placementRequest"/>
+            <div *ngIf="angForm.controls['placementRequest'].invalid" class="alert alert-danger">
+              <div *ngIf="angForm.controls['placementRequest'].errors.required">
+                {{ 'enter required' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>2.4. {{ 'Exit spk' | translate }}</h5>
+          <div style="text-align: justify">
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text1' | translate }} 
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text2' | translate }}
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text3' | translate }}
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text4' | translate }}
+            <br>
+          </div>
+          <br>
+          <h5>2.5. {{ 'Upload landSchema' | translate }}</h5>
+        </div>
+        <div class="form-group">
+          <h6>{{ 'Letter' | translate }}</h6>
+          <div class="container">
+            <input type="file" name="landSchema" ng2FileSelect [uploader]="landSchema" formControlName="landSchema"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="landSchema.uploadAll()" 
+              [disabled]="!landSchema.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="landSchema.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+          <div *ngIf="landSchemaFile==null" class="alert alert-danger">
+            {{ 'upload file required' | translate }}
+          </div>
+      </div>
+        <br>
+        <div>
+          <h5>2.6.  {{ 'concept' | translate }}</h5>
+        </div>
+        <div class="form-group">
+          <div class="container">
+            <input type="file" name="projectConcept" ng2FileSelect [uploader]="projectConcept" formControlName="projectConcept"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="projectConcept.uploadAll()" 
+              [disabled]="!projectConcept.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="projectConcept.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <br>
+        <div>
+          <h5>2.7.{{ 'upload foreskiz' | translate }}</h5>
+        </div>
+        <div class="form-group">
+          <div class="container">
+            <input type="file" name="foreskiz" ng2FileSelect [uploader]="foreskiz" formControlName="foreskiz"/>
+            <button type="button" class="btn btn-success btn-s" style="font-size: 8pt !important;"
+              (click)="foreskiz.uploadAll()" 
+              [disabled]="!foreskiz.getNotUploadedItems().length" >
+              {{ 'upload' | translate }}
+            </button>
+          </div>
+          <div *ngIf="foreskiz.getNotUploadedItems().length" class="alert alert-danger">
+            {{ 'upload required' | translate }}
+          </div>
+        </div>
+        <div class="aggree">
+          <input type="checkbox" [(ngModel)]="aggree" formControlName="aggree" required><a href="#">{{ 'rules' | translate }}</a>
+          <div *ngIf="angForm.controls['aggree'].invalid" class="alert alert-danger">
+            <div *ngIf="angForm.controls['aggree'].errors.required">
+              {{ 'rules required' | translate }}
+            </div>
+          </div>
+        </div>
+        <input type="submit" class="fadeIn thirteenth" value="{{ 'create application' | translate }}" (click)=register()>
+      </form>
+    </div>
+  </div>

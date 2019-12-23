@@ -1,0 +1,639 @@
+<div class="sidenav-container" fxLayout="row" color="primary">
+    <div *ngIf="errorMsg"  [ngClass] = "'error'"> {{errorMsg}} </div> 
+    <table style="font-size: 10pt; width: 100%;">
+      <tr>
+        <td align="right"><b>{{ 'STATUS' | translate }}:</b></td>
+        <td align="left">{{project.status}}</td>
+        <td align="right"><b>{{ 'application date' | translate }}:</b></td>
+        <td align="left">{{created}}</td>
+      </tr>
+      <tr>
+          <td align="right"><b>{{ 'application no' | translate }}:</b></td>
+          <td align="left">{{project._id}}</td>
+          <td align="right"><b>{{ 'registration date' | translate }}:</b></td>
+          <td align="left">{{project.dates.start}}</td>
+      </tr>
+      <tr>
+          <td align="right"><b>{{ 'project category' | translate }}:</b></td>
+          <td align="left">{{categoryPr.name}}</td>
+          <td align="right"><b>{{ 'end date' | translate }}:</b></td>
+          <td align="left">{{project.dates.end}}</td>
+      </tr>
+      <tr>
+          <td align="right"><b>{{ 'PROJECT NAME' | translate }}:</b></td>
+          <td align="left">{{project.name}}</td>
+          <td align="right"><b>{{ 'PROJECT MANAGER' | translate }}:</b></td>
+          <td align="left">{{managerPr.fio}}</td>
+      </tr>
+      <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td align="right"><b>{{ 'MANAGER contacts' | translate }}:</b></td>
+          <td align="left">{{managerPr.phone}}</td>
+      </tr>
+    </table>
+  </div>
+<!--div class="container-fluid" style="background-color: blue;width: 100%;height: 10%;">&nbsp;<br>&nbsp;
+</div-->
+<div class="wrapper fadeInDown" *ngIf="role=='manager' || role=='lawyer' || role=='financier'"><!-- -->
+    <div id="formContent"><!-- id="formContent"-->
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <h3>{{ 'ZAYAVKA TITLE' | translate }}</h3>
+      </div>
+      <div class="fadeIn fourth">
+        <h5>{{ 'initiator info' | translate }}</h5>
+      </div>
+    <table class="table">
+        <tr>
+            <td><b>1.1. {{ 'bin' | translate }}:</b> {{project.bin}}</td>
+        </tr>
+        <tr>
+            <td><b>1.2. {{ 'organisation name' | translate }}:</b> {{project.organisation}}</td>
+        </tr>
+        <tr>
+            <td><b>1.3. {{ 'address' | translate }}:</b> {{project.address}}</td>
+        </tr>
+        <tr>
+            <td><b>1.4. {{ 'phone' | translate }}:</b> {{project.phone}}</td>
+        </tr>
+        <tr>
+            <td><b>1.5. E-mail:</b> {{project.email}}</td>
+        </tr>
+        <tr>
+            <td><b>1.6. Web-site:</b> {{project.web}}</td>
+        </tr>
+        <tr>
+            <td><b>1.7. {{ 'registration' | translate }}:</b> {{project.registration}}</td>
+        </tr>
+        <tr>
+            <td><b>1.8. {{ 'fioDirector' | translate }}:</b> {{project.fioDirector}}</td>
+        </tr>
+        <tr>
+            <td><b>1.9. {{ 'project_role2' | translate }}:</b> {{project.project_role}}</td>
+        </tr>
+        <tr>
+            <td><b>1.10. {{ 'financial description' | translate }} ({{ 'personalCount' | translate }}):</b> {{project.personalCount}}</td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <h5>1. {{ 'project description' | translate }}</h5>
+                    <h5>1.1. {{ 'project realisation' | translate }}:</h5>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><b>{{ 'project description' | translate }}:</b> {{project.ProjectDescription}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'ProjectAim' | translate }}:</b> {{project.ProjectAim}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'ProjectInnovation' | translate }}:</b> {{project.ProjectInnovation}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'ProjectUniqueness' | translate }}:</b> {{project.ProjectUniqueness}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'ProjectApplication' | translate }}:</b> {{project.ProjectApplication}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'ProjectPerspective' | translate }}:</b> {{project.ProjectPerspective}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'companyInfo' | translate }}:</b> {{project.companyInfo}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'ProjectLeaderDescription' | translate }}:</b> {{project.ProjectLeaderDescription}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'participationOfParties' | translate }}:</b> {{project.participationOfParties}}</td>
+        </tr>
+        <tr>
+            <td><b>{{ 'Innovations' | translate }}:</b> {{project.Innovations}}</td>
+        </tr>
+        <tr>
+            <td>
+                <table  class="table">
+                    <tr>
+                        <td scope="col"><b>{{ 'articles' | translate }}</b></td>
+                        <td scope="col"><b>{{ 'costs' | translate }}</b></td>
+                        <td scope="col"><b>{{ 'spk' | translate }}</b></td>
+                        <td scope="col"><b>{{ 'initiator' | translate }}</b></td>
+                        <td scope="col"><b>{{ 'funds' | translate }}</b></td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'land' | translate }}</td>
+                        <td>{{project.landTotal}}</td>
+                        <td>{{project.landSpkAstana}}</td>
+                        <td>{{project.landInitiator}}</td>
+                        <td>{{project.landInvested}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'construction' | translate }}</td>
+                        <td>{{project.buildingTotal}}</td>
+                        <td>{{project.buildingSpkAstana}}</td>
+                        <td>{{project.buildingInitiator}}</td>
+                        <td>{{project.buildingInvested}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'technika' | translate }}</td>
+                        <td>{{project.technicaTotal}}</td>
+                        <td>{{project.technicaSpkAstana}}</td>
+                        <td>{{project.technicaInitiator}}</td>
+                        <td>{{project.technicaInvested}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'oborot' | translate }}</td>
+                        <td>{{project.oborotTotal}}</td>
+                        <td>{{project.oborotSpkAstana}}</td>
+                        <td>{{project.oborotInitiator}}</td>
+                        <td>{{project.oborotInvested}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'other' | translate }}</td>
+                        <td>{{project.otherTotal}}</td>
+                        <td>{{project.otherSpkAstana}}</td>
+                        <td>{{project.otherInitiator}}</td>
+                        <td>{{project.otherInvested}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row"><b>{{ 'itogo' | translate }}</b></td>
+                        <td>{{project.itogoTotal}}</td>
+                        <td>{{project.itogoSpkAstana}}</td>
+                        <td>{{project.itogoInitiator}}</td>
+                        <td>{{project.itogoInvested}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row"><b>{{ 'dolya' | translate }}</b></td>
+                        <td>{{project.dolyaTotal}}</td>
+                        <td>{{project.dolyaSpkAstana}}</td>
+                        <td>{{project.dolyaInitiator}}</td>
+                        <td>{{project.dolyaInvested}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td><h5>2.2. {{ 'results' | translate }}</h5></td>
+        </tr>
+        <tr>
+            <td>
+                <table  class="table">
+                    <tr>
+                        <td scope="col"><b>{{ 'indicators' | translate }}</b></td>
+                        <td scope="col"><b>{{ 'monthly' | translate }}</b></td>
+                        <td scope="col"><b>{{ 'yearly' | translate }}</b></td>
+                        <td scope="col">
+                            <b>{{ 'period' | translate }}</b> {{project.totalPeriod}}
+                            <b>{{ 'year' | translate }}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'revenue' | translate }}</td>
+                        <td>{{project.valovayaVyruchka}}</td>
+                        <td>{{project.valovayaVyruchkaYear}}</td>
+                        <td>{{project.valovayaVyruchkaPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'production' | translate }}</td>
+                        <td>{{project.valovoyProduction}}</td>
+                        <td>{{project.valovoyProductionYear}}</td>
+                        <td>{{project.valovoyProductionPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'costsProd' | translate }}</td>
+                        <td>{{project.rashodyProduction}}</td>
+                        <td>{{project.rashodyProductionYear}}</td>
+                        <td>{{project.rashodyProductionPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'operational' | translate }}</td>
+                        <td>{{project.operationalProfit}}</td>
+                        <td>{{project.operationalProfitYear}}</td>
+                        <td>{{project.operationalProfitPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'obyazatelstv' | translate }}</td>
+                        <td>{{project.pogashenieObyazatelstv}}</td>
+                        <td>{{project.pogashenieObyazatelstvYear}}</td>
+                        <td>{{project.pogashenieObyazatelstvPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'otherRashody' | translate }}</td>
+                        <td>{{project.otherRashody}}</td>
+                        <td>{{project.otherRashodyYear}}</td>
+                        <td>{{project.otherRashodyPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'tax' | translate }}</td>
+                        <td>{{project.taxes}}</td>
+                        <td>{{project.taxesYear}}</td>
+                        <td>{{project.taxesPeriod}}</td>
+                    </tr>
+                    <tr>
+                        <td scope="row">{{ 'profit' | translate }}</td>
+                        <td>{{project.profit}}</td>
+                        <td>{{project.profitYear}}</td>
+                        <td>{{project.profitPeriod}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>{{ 'notes' | translate }}:</b>{{project.notes}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h5>2.3. {{ 'proposals and wishes' | translate }}</h5>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>{{ 'project realisation2' | translate }} </b>{{project.landRequested}} {{ 'in city' | translate }}.
+                <br>
+                {{ 'text1' | translate }} {{project.landRequestedAddress}}
+                <br>
+                {{ 'text2' | translate }} {{project.placementRequest}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <ul>
+                    <li *ngFor="let item of project.anketaComments; let i = index;">
+                        {{item}}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr *ngIf="project.status=='Не принято' && role =='manager'">
+            <td>
+                <input type="text" [(ngModel)]="anketaComment" [ngModelOptions]="{standalone: true}" placeholder="{{ 'comments' | translate}}">
+            </td>
+        </tr>
+        <tr *ngIf="project.status=='Не принято' && role =='manager'">
+          <td>
+            <label>{{ 'date to' | translate}}:</label>
+            <input type="date" [(ngModel)]="anketaSrok" [ngModelOptions]="{standalone: true}" placeholder="{{ 'date to' | translate}}">
+            <div *ngIf="errorMsgDate"  [ngClass] = "'error'"> {{errorMsg}} </div>
+          </td>
+        </tr>
+        <tr *ngIf="project.status=='Не принято' && role =='manager'">
+            <td align="center">
+                <button class="btn btn-success btn-s" style="font-size: 8pt !important;" (click)="accept()">{{ 'ACCEPT' | translate }}</button>&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-success btn-s" style="font-size: 8pt !important;" (click)="send()">{{ 'SEND EDIT' | translate }}</button>
+            </td>
+        </tr>
+    </table>          
+  </div>
+</div>
+
+<!-- investor -->
+<div class="wrapper fadeInDown" *ngIf="role=='investor'"><!-- -->
+    <div id="formContent"><!-- id="formContent"-->
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <h3>{{ 'ZAYAVKA TITLE' | translate }}</h3>
+      </div>
+
+      <!-- Login Form -->
+      <form [formGroup]="angForm" novalidate>
+        <div *ngIf="errorMsg" [ngClass] = "'error'"> {{errorMsg}} </div> 
+        <div class="fadeIn fourth">
+            <h5>{{ 'initiator info' | translate }}</h5>
+        </div>
+        <div class="form-group">
+          <label for="bin">1.1. {{ 'bin' | translate }}: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="bin" class="form-control fadeIn fifth" name="bin" placeholder="1.1. {{ 'bin' | translate }}:" [(ngModel)]="project.bin" formControlName="bin" (change)="binService()">
+          <div *ngFor="let validation of account_validation_messages.bin">
+            <div *ngIf="angForm.get('bin').hasError(validation.type) && (angForm.controls['bin'].dirty || angForm.controls['bin'].touched)" class="alert alert-danger">
+              {{validation.message | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="organisation">1.2. {{ 'organisation name' | translate }}:</label>
+          <input type="text" id="organisation" class="form-control fadeIn sixth" name="organisation" placeholder="1.2. {{ 'organisation name' | translate }}:" [(ngModel)]="project.organisation" formControlName="organisation" (change)="organisatioinChanged()">
+          <div *ngIf="angForm.controls['organisation'].invalid && (angForm.controls['organisation'].dirty || angForm.controls['organisation'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['organisation'].errors.required">
+              {{ 'organisation required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="address">1.3. {{ 'address' | translate }}:</label>
+          <input type="text" id="address" class="form-control fadeIn seventh" name="address" placeholder="1.3. {{ 'address' | translate }}:" [(ngModel)]="project.address" formControlName="address" (change)="addressChanged()">
+          <div *ngIf="angForm.controls['address'].invalid && (angForm.controls['address'].dirty || angForm.controls['address'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['address'].errors.required">
+              {{ 'address required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">1.4. {{ 'phone' | translate }}:</label>
+          <input type="text" id="phone" class="form-control fadeIn eighth" name="phone" placeholder="1.4. {{ 'phone' | translate }}:" [(ngModel)]="project.phone" formControlName="phone" (change)="phoneChanged()">
+          <div *ngIf="angForm.controls['phone'].invalid && (angForm.controls['phone'].dirty || angForm.controls['phone'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['phone'].errors.required">
+              {{ 'phone required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">1.5. E-mail: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="email" class="form-control fadeIn ninth" name="email" placeholder="1.5. E-mail:" [(ngModel)]="project.email" formControlName="email" (change)="emailChanged()">
+          <div *ngFor="let validation of account_validation_messages.email">
+            <div *ngIf="angForm.get('email').hasError(validation.type) && (angForm.controls['email'].dirty || angForm.controls['email'].touched)" class="alert alert-danger">
+              {{validation.message | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="web">1.6. Web-site:</label>
+          <input type="text" id="web" class="form-control fadeIn tenth" name="web" placeholder="1.6. Web-site:" [(ngModel)]="project.web" formControlName="web" (change)="webChanged()">
+        </div>
+        <div class="form-group">
+          <label for="registration">1.7. {{ 'registration' | translate }}:</label>
+          <input type="date" id="registration" class="form-control fadeIn eleventh" name="registration" placeholder="1.7. {{ 'registration' | translate }}:" [(ngModel)]="project.registration" formControlName="registration" (change)="registrationChanged()">
+          <div *ngIf="angForm.controls['registration'].invalid && (angForm.controls['registration'].dirty || angForm.controls['registration'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['registration'].errors.required">
+              {{ 'registration required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="fioDirector">1.8. {{ 'fioDirector' | translate }}:</label>
+          <input type="text" id="fioDirector" class="form-control fadeIn twelfth" name="fioDirector" placeholder="1.8. {{ 'fioDirector' | translate }}:" [(ngModel)]="project.fioDirector" formControlName="fioDirector" (change)="fioChanged()">
+          <div *ngIf="angForm.controls['fioDirector'].invalid && (angForm.controls['fioDirector'].dirty || angForm.controls['fioDirector'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['fioDirector'].errors.required">
+              {{ 'fioDirector required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="project_role">1.9. {{ 'project_role' | translate }}:</label>
+          <input disabled type="text" id="project_role" class="fadeIn thirteenth" name="project_role" [(ngModel)]="project_rolePr.name" formControlName="project_role" (change)="roleChanged()">
+        </div>
+        <div class="form-group">
+          <label>1.10. {{ 'financial description' | translate }}: </label>
+          <label for="personalCount">{{ 'personalCount' | translate }}:</label>
+          <input type="text" id="personalCount" class="form-control fadeIn fourteenth" name="personalCount" placeholder="{{ 'personalCount' | translate }}:" [(ngModel)]="project.personalCount" formControlName="personalCount" (change)="personalCountChanged()">
+          <div *ngIf="angForm.controls['personalCount'].invalid && (angForm.controls['personalCount'].dirty || angForm.controls['personalCount'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['personalCount'].errors.required">
+              {{ 'personalCount required' | translate }}
+            </div>
+          </div>
+        </div>
+        <br>
+        <div>
+          <h5>1. {{ 'project description' | translate }}</h5>
+          <h5>1.1. {{ 'project realisation' | translate }}:</h5>
+        </div>
+        <div class="form-group">
+          <label for="ProjectDescription">{{ 'project description' | translate }}</label>
+          <input type="text" id="ProjectDescription" class="form-control" name="ProjectDescription" placeholder="{{ 'project description' | translate }}" [(ngModel)]="project.ProjectDescription" formControlName="ProjectDescription" (change)="descriptionChanged()">
+        </div>
+        <div class="form-group">
+          <label for="ProjectAim">{{ 'ProjectAim' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="ProjectAim" class="form-control" name="ProjectAim" placeholder="{{ 'ProjectAim' | translate }}" [(ngModel)]="project.ProjectAim" formControlName="ProjectAim" (change)="aimChanged()">
+        </div>
+        <div class="form-group">
+          <label for="ProjectInnovation">{{ 'ProjectInnovation' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="ProjectInnovation" class="form-control" name="ProjectInnovation" placeholder="{{ 'ProjectInnovation' | translate }}" [(ngModel)]="project.ProjectInnovation" formControlName="ProjectInnovation" (change)="projectInnoChanged()">
+        </div>
+        <div class="form-group">
+          <label for="ProjectUniqueness">{{ 'ProjectUniqueness' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="ProjectUniqueness" class="form-control" name="ProjectUniqueness" placeholder="{{ 'ProjectUniqueness' | translate }}" [(ngModel)]="project.ProjectUniqueness" formControlName="ProjectUniqueness" (change)="uniquenessChanged()">
+        </div>
+        <div class="form-group">
+          <label for="ProjectApplication">{{ 'ProjectApplication' | translate }}</label>
+          <input type="text" id="ProjectApplication" class="form-control" name="ProjectApplication" placeholder="{{ 'ProjectApplication' | translate }}" [(ngModel)]="project.ProjectApplication" formControlName="ProjectApplication" (change)="applicationChanged()">
+        </div>
+        <div class="form-group">
+          <label for="ProjectPerspective">{{ 'ProjectPerspective' | translate }}</label>
+          <input type="text" id="ProjectPerspective" class="form-control" name="ProjectPerspective" placeholder="{{ 'ProjectPerspective' | translate }}" [(ngModel)]="project.ProjectPerspective" formControlName="ProjectPerspective" (change)="perspectiveChanged()">
+        </div>
+        <div class="form-group">
+          <label for="companyInfo">{{ 'companyInfo' | translate }}</label>
+          <input type="text" id="companyInfo" class="form-control" name="companyInfo" placeholder="{{ 'companyInfo' | translate }}" [(ngModel)]="project.companyInfo" formControlName="companyInfo" (change)="companyInfoChanged()">
+        </div>
+        <div class="form-group">
+          <label for="ProjectLeaderDescription">{{ 'ProjectLeaderDescription' | translate }}</label>
+          <input type="text" id="ProjectLeaderDescription" class="form-control" name="ProjectLeaderDescription" placeholder="{{ 'ProjectLeaderDescription' | translate }}" [(ngModel)]="project.ProjectLeaderDescription" formControlName="ProjectLeaderDescription" (change)="leaderChanged()">
+        </div>
+        <div class="form-group">
+          <label for="participationOfParties">{{ 'participationOfParties' | translate }}:</label>
+          <input type="text" id="participationOfParties" class="form-control" name="participationOfParties" placeholder="{{ 'participationOfParties' | translate }}" [(ngModel)]="project.participationOfParties" formControlName="participationOfParties" (change)="participationOfPartiesChanged()">
+        </div>
+        <div class="form-group">
+          <label for="Innovations">{{ 'Innovations' | translate }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="Innovations" class="form-control" name="Innovations" placeholder="{{ 'Innovations' | translate }}" [(ngModel)]="project.Innovations" formControlName="Innovations" (change)="innovationsChanged()">
+          <div *ngIf="angForm.controls['Innovations'].invalid && (angForm.controls['Innovations'].dirty || angForm.controls['Innovations'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['Innovations'].errors.required">
+              {{ 'Innovations required' | translate }}
+            </div>
+          </div>
+        </div>
+        <div>
+          <table  class="table">
+            <tr>
+              <td scope="col" style="width: 5%"><b>{{ 'articles' | translate }}</b></td>
+              <td scope="col" style="width: 25%"><b>{{ 'costs' | translate }}</b></td>
+              <td scope="col" style="width: 25%"><b>{{ 'spk' | translate }}</b></td>
+              <td scope="col" style="width: 25%"><b>{{ 'initiator' | translate }}</b></td>
+              <td scope="col" style="width: 20%"><b>{{ 'funds' | translate }}</b></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'land' | translate }}</td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.landTotal" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.landSpkAstana" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.landInitiator" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.landInvested" [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'construction' | translate }}</td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.buildingTotal" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.buildingSpkAstana" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="buildingInitiator" type="text" class="table-input form-control" (input)=remont() [(ngModel)]="project.buildingInitiator" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="buildingInvested" type="text" class="table-input form-control" (input)=remont() [(ngModel)]="project.buildingInvested" [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'technika' | translate }}</td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.technicaTotal" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.technicaSpkAstana" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="technicaInitiator" type="text" class="table-input form-control" (input)=tehnika() [(ngModel)]="project.technicaInitiator" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="technicaInvested" type="text" class="table-input form-control" (input)=tehnika() [(ngModel)]="project.technicaInvested" [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'oborot' | translate }}</td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.oborotTotal" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.oborotSpkAstana" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="oborotInitiator" type="text" class="table-input form-control" (input)=oborot() [(ngModel)]="project.oborotInitiator" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="oborotInvested" type="text" class="table-input form-control" (input)=oborot() [(ngModel)]="project.oborotInvested" [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'other' | translate }}</td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.otherTotal" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.otherSpkAstana" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="otherInitiator" type="text" class="table-input form-control" (input)=other() [(ngModel)]="project.otherInitiator" [ngModelOptions]="{standalone: true}"></td>
+              <td><input id="otherInvested" type="text" class="table-input form-control" (input)=other() [(ngModel)]="project.otherInvested" [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row"><b>{{ 'itogo' | translate }}</b></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.itogoTotal" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.itogoSpkAstana" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.itogoInitiator" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.itogoInvested" [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row"><b>{{ 'dolya' | translate }}</b></td>
+              <td><input disabled type="text" class="table-input form-control" name="dolyaTotal" [(ngModel)]="project.dolyaTotal" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" name="dolyaSpkAstana" [(ngModel)]="project.dolyaSpkAstana" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" name="dolyaInitiator" [(ngModel)]="project.dolyaInitiator" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" name="dolyaInvested" [(ngModel)]="project.dolyaInvested" [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <h5>2.2. {{ 'results' | translate }}</h5>
+        </div>
+        <div>
+          <table  class="table">
+            <tr>
+              <td scope="col"><b>{{ 'indicators' | translate }}</b></td>
+              <td scope="col"><b>{{ 'monthly' | translate }}</b></td>
+              <td scope="col"><b>{{ 'yearly' | translate }}</b></td>
+              <td scope="col">
+                <b>{{ 'period' | translate }}</b>
+                <input type="number" class="table-input" id="totalPeriod" (input)=period() name="totalPeriod" [(ngModel)]="project.totalPeriod" formControlName="totalPeriod" max="12" min="1"><b>{{ 'year' | translate }}</b>
+                <div *ngFor="let validation of account_validation_messages.totalPeriod">
+                  <div *ngIf="angForm.get('totalPeriod').hasError(validation.type) && (angForm.controls['totalPeriod'].dirty || angForm.controls['totalPeriod'].touched)" class="alert alert-danger">
+                    {{validation.message | translate }}
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'revenue' | translate }}</td>
+              <td><input id="valovayaVyruchka" type="text" class="table-input form-control" (input)=vyruchka() name="valovayaVyruchka" [(ngModel)]="project.valovayaVyruchka" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.valovayaVyruchkaYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.valovayaVyruchkaPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'production' | translate }}</td>
+              <td><input id="valovoyProduction" type="text" class="table-input form-control" (input)=production() name="valovoyProduction" [(ngModel)]="project.valovoyProduction" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.valovoyProductionYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.valovoyProductionPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'costsProd' | translate }}</td>
+              <td><input id="rashodyProduction" type="text" class="table-input form-control" (input)=rashodyProd() name="rashodyProduction" [(ngModel)]="project.rashodyProduction" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.rashodyProductionYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.rashodyProductionPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'operational' | translate }}</td>
+              <td><input id="operationalProfit" type="text" class="table-input form-control" (input)=operational() name="operationalProfit" [(ngModel)]="project.operationalProfit" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.operationalProfitYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.operationalProfitPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'obyazatelstv' | translate }}</td>
+              <td><input id="pogashenieObyazatelstv" type="text" class="table-input form-control" (input)=obyazatelstv() name="pogashenieObyazatelstv" [(ngModel)]="project.pogashenieObyazatelstv" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.pogashenieObyazatelstvYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.pogashenieObyazatelstvPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'otherRashody' | translate }}</td>
+              <td><input id="otherRashody" type="text" class="table-input form-control" (input)=otherR() name="otherRashody" [(ngModel)]="project.otherRashody" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.otherRashodyYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.otherRashodyPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'tax' | translate }}</td>
+              <td><input id="taxes" type="text" class="table-input form-control" (input)=tax() name="taxes" [(ngModel)]="project.taxes" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.taxesYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.taxesPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+            <tr>
+              <td scope="row">{{ 'profit' | translate }}</td>
+              <td><input id="profit" type="text" class="table-input form-control" (input)=prof() name="profit" [(ngModel)]="project.profit" [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.profitYear" disabled [ngModelOptions]="{standalone: true}"></td>
+              <td><input disabled type="text" class="table-input form-control" [(ngModel)]="project.profitPeriod" disabled [ngModelOptions]="{standalone: true}"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="form-group">
+          <label for="notes"><b>{{ 'notes' | translate }}:</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <input type="text" id="notes" class="form-control" name="notes" placeholder="{{ 'notes' | translate }}:" [(ngModel)]="project.notes" formControlName="notes" (change)="notesChanged()">
+          <div *ngIf="angForm.controls['notes'].invalid && (angForm.controls['notes'].dirty || angForm.controls['notes'].touched)" class="alert alert-danger">
+            <div *ngIf="angForm.controls['notes'].errors.required">
+              {{ 'notes required' | translate }}
+            </div>
+          </div>
+        </div>
+        <label>** {{ 'notes **' | translate }}</label>
+        <label>*** {{ 'notes ***' | translate }}</label>
+        <div>
+          <h5>2.3. {{ 'proposals and wishes' | translate }}</h5>
+          <div style="text-align: justify">
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'project realisation2' | translate }}
+            <input style="width: 15%" type="text" class="table-input form-control" id="landRequested" name="landRequested" [(ngModel)]="project.landRequested" formControlName="landRequested" (change)="landRequestedChanged()"/>
+            <div *ngIf="angForm.controls['landRequested'].invalid && (angForm.controls['landRequested'].dirty || angForm.controls['landRequested'].touched)" class="alert alert-danger">
+              <div *ngIf="angForm.controls['landRequested'].errors.required">
+                {{ 'enter required' | translate }}
+              </div>
+            </div>
+            {{ 'in city' | translate }}
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'text1' | translate }}
+            <input style="width: 15%" type="text" class="table-input form-control" id="landRequestedAddress" name="landRequestedAddress" [(ngModel)]="project.landRequestedAddress" formControlName="landRequestedAddress" (change)="landRequestedAddressChanged()"/>
+            <div *ngIf="angForm.controls['landRequestedAddress'].invalid && (angForm.controls['landRequestedAddress'].dirty || angForm.controls['landRequestedAddress'].touched)" class="alert alert-danger">
+              <div *ngIf="angForm.controls['landRequestedAddress'].errors.required">
+                {{ 'enter required' | translate }}
+              </div>
+            </div>
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ 'text2' | translate }}
+            <input style="width: 15%" type="text" class="table-input form-control" id="placementRequest" name="placementRequest" [(ngModel)]="project.placementRequest" formControlName="placementRequest" (change)="placementRequestChanged()"/>
+            <div *ngIf="angForm.controls['placementRequest'].invalid && (angForm.controls['placementRequest'].dirty || angForm.controls['placementRequest'].touched)" class="alert alert-danger">
+              <div *ngIf="angForm.controls['placementRequest'].errors.required">
+                {{ 'enter required' | translate }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h5>2.4. {{ 'Exit spk' | translate }}</h5>
+          <div style="text-align: justify">
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text1' | translate }} 
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text2' | translate }}
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text3' | translate }}
+            <br>
+            &nbsp;&nbsp;&nbsp;&nbsp;{{ 'Exit spk text4' | translate }}
+            <br>
+          </div>
+          <br>
+        </div>
+        <div class="form-group">
+          <label><b>{{ 'manager comments' | translate }}:</b> {{project.anketaSrok}}</label>
+          <ul>
+            <li *ngFor="let item of project.anketaComments; let i = index;">
+                {{item}}
+            </li>
+          </ul>
+        </div>
+        <div class="form-group" *ngIf="!project.editManager">
+          <button style="font-size: 8pt !important;" class="form-control fadeIn thirteenth btn btn-success btn-s" (click)=save()>{{ 'save' | translate }}</button>
+        </div>
+      </form>
+    </div>
+  </div>

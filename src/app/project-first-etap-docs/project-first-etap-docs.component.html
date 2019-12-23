@@ -1,0 +1,503 @@
+<div class="sidenav-container" fxLayout="row" color="primary">
+        <div *ngIf="errorMsg"  [ngClass] = "'error'"> {{errorMsg}} </div> 
+        <table style="font-size: 10pt; width: 100%;">
+          <tr>
+            <td align="right"><b>{{ 'STATUS' | translate }}:</b></td>
+            <td align="left">{{project.status}}</td>
+            <td align="right"><b>{{ 'application date' | translate }}:</b></td>
+            <td align="left">{{created}}</td>
+          </tr>
+          <tr>
+              <td align="right"><b>{{ 'application no' | translate }}:</b></td>
+              <td align="left">{{project._id}}</td>
+              <td align="right"><b>{{ 'registration date' | translate }}:</b></td>
+              <td align="left">{{project.dates.start}}</td>
+          </tr>
+          <tr>
+              <td align="right"><b>{{ 'project category' | translate }}:</b></td>
+              <td align="left">{{categoryPr.name}}</td>
+              <td align="right"><b>{{ 'end date' | translate }}:</b></td>
+              <td align="left">{{project.dates.end}}</td>
+          </tr>
+          <tr>
+              <td align="right"><b>{{ 'PROJECT NAME' | translate }}:</b></td>
+              <td align="left">{{project.name}}</td>
+              <td align="right"><b>{{ 'PROJECT MANAGER' | translate }}:</b></td>
+              <td align="left">{{managerPr.fio}}</td>
+          </tr>
+          <tr>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td align="right"><b>{{ 'MANAGER contacts' | translate }}:</b></td>
+              <td align="left">{{managerPr.phone}}</td>
+          </tr>
+        </table>
+      </div>
+<!--div class="container-fluid" style="background-color: blue;width: 100%;height: 10%;">&nbsp;<br>&nbsp;
+</div-->
+<table class="table">
+    <tr *ngIf="role=='manager' || role=='investor'">
+        <td align="right" colspan="6">
+            <button style="font-size: 8pt !important;" class="btn btn-success btn-s" (click)=save()>{{ 'save' | translate }}</button>
+        </td>
+    </tr>
+    <tr style="font-weight: bold; background-color: rgb(81, 56, 224); color: white;">
+        <td style="width: 5%">№</td>
+        <td style="width: 25%">{{ 'document name' | translate }}</td>
+        <td style="width: 20%">{{ 'DOCUMENT' | translate }}</td>
+        <td style="width: 10%">{{ 'date upload' | translate }}</td>
+        <td style="width: 20%">{{ 'STATUS' | translate }}</td>
+        <td style="width: 20%">{{ 'date to' | translate }}</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>{{ 'financialReport1' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.financialReport1}}'>{{project.financialReport1}}</a>
+                    </td>
+                </tr>
+                <tr id="financialReport1_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="financialReport1"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="financialReport1.uploadAll()" 
+                                [disabled]="!financialReport1.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="financialReport1.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.financialReport1_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="financialReport1_status"
+            [data]="statuses"
+            [(ngModel)]="project.financialReport1_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="financialReport1_srok" type="date" [(ngModel)]="project.financialReport1_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>{{ 'financialReport2' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.financialReport2}}'>{{project.financialReport2}}</a>
+                    </td>
+                </tr>
+                <tr id="financialReport2_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="financialReport2"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="financialReport2.uploadAll()" 
+                                [disabled]="!financialReport2.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="financialReport2.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.financialReport2_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="financialReport2_status"
+            [data]="statuses"
+            [(ngModel)]="project.financialReport2_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="financialReport2_srok" type="date" [(ngModel)]="project.financialReport2_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>{{ 'financialReport3' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.financialReport3}}'>{{project.financialReport3}}</a>
+                    </td>
+                </tr>
+                <tr id="financialReport3_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="financialReport3"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="financialReport3.uploadAll()" 
+                                [disabled]="!financialReport3.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="financialReport3.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.financialReport3_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="financialReport3_status"
+            [data]="statuses"
+            [(ngModel)]="project.financialReport3_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="financialReport3_srok" type="date" [(ngModel)]="project.financialReport3_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>{{ 'descriptionNote1' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.descriptionNote1}}'>{{project.descriptionNote1}}</a>
+                    </td>
+                </tr>
+                <tr id="descriptionNote1_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="descriptionNote1"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="descriptionNote1.uploadAll()" 
+                                [disabled]="!descriptionNote1.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="descriptionNote1.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.descriptionNote1_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="descriptionNote1_status"
+            [data]="statuses"
+            [(ngModel)]="project.descriptionNote1_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="descriptionNote1_srok" type="date" [(ngModel)]="project.descriptionNote1_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>{{ 'descriptionNote2' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.descriptionNote2}}'>{{project.descriptionNote2}}</a>
+                    </td>
+                </tr>
+                <tr id="descriptionNote2_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="descriptionNote2"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="descriptionNote2.uploadAll()" 
+                                [disabled]="!descriptionNote2.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="descriptionNote2.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.descriptionNote2_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="descriptionNote2_status"
+            [data]="statuses"
+            [(ngModel)]="project.descriptionNote2_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="descriptionNote2_srok" type="date" [(ngModel)]="project.descriptionNote2_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>{{ 'descriptionNote3' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.descriptionNote3}}'>{{project.descriptionNote3}}</a>
+                    </td>
+                </tr>
+                <tr id="descriptionNote3_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="descriptionNote3"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="descriptionNote3.uploadAll()" 
+                                [disabled]="!descriptionNote3.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="descriptionNote3.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.descriptionNote3_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="descriptionNote3_status"
+            [data]="statuses"
+            [(ngModel)]="project.descriptionNote3_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="descriptionNote3_srok" type="date" [(ngModel)]="project.descriptionNote3_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>{{ 'garantyLetter' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.garantyLetter}}'>{{project.garantyLetter}}</a>
+                    </td>
+                </tr>
+                <tr id="garantyLetter_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="garantyLetter"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="garantyLetter.uploadAll()" 
+                                [disabled]="!garantyLetter.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="garantyLetter.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.garantyLetter_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="garantyLetter_status"
+            [data]="statuses"
+            [(ngModel)]="project.garantyLetter_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="garantyLetter_srok" type="date" [(ngModel)]="project.garantyLetter_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>{{ 'landSchema' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.landSchema}}'>{{project.landSchema}}</a>
+                    </td>
+                </tr>
+                <tr id="landSchema_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="landSchema"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="landSchema.uploadAll()" 
+                                [disabled]="!landSchema.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="landSchema.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.landSchema_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="landSchema_status"
+            [data]="statuses"
+            [(ngModel)]="project.landSchema_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="landSchema_srok" type="date" [(ngModel)]="project.landSchema_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>{{ 'conception' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.projectConcept}}'>{{project.projectConcept}}</a>
+                    </td>
+                </tr>
+                <tr id="projectConcept_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="projectConcept"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="projectConcept.uploadAll()" 
+                                [disabled]="!projectConcept.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="projectConcept.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.projectConcept_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="projectConcept_status"
+            [data]="statuses"
+            [(ngModel)]="project.projectConcept_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="projectConcept_srok" type="date" [(ngModel)]="project.projectConcept_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>{{ 'foreskiz' | translate }}</td>
+        <td>
+            <table class="table">
+                <tr>
+                    <td>
+                        <label>{{ 'uploaded' | translate }}:</label><a href='{{urlBack}}/api/users/{{project.foreskiz}}'>{{project.foreskiz}}</a>
+                    </td>
+                </tr>
+                <tr id="foreskiz_file">
+                    <td>
+                        <label>{{ 'new file' | translate }}:</label>
+                        <div class="form-group">
+                            <div class="container">
+                                <input type="file" ng2FileSelect [uploader]="foreskiz"/>
+                                <br>
+                                <br>
+                                <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
+                                (click)="foreskiz.uploadAll()" 
+                                [disabled]="!foreskiz.getNotUploadedItems().length" >
+                                {{ 'upload' | translate }}
+                                </button>
+                            </div>
+                            <div *ngIf="foreskiz.getNotUploadedItems().length" class="alert alert-danger">
+                                {{ 'upload required' | translate }}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td>{{project.foreskiz_date}}</td>
+        <td>
+            <ng-multiselect-dropdown
+            id="foreskiz_status"
+            [data]="statuses"
+            [(ngModel)]="project.foreskiz_status"
+            [ngModelOptions]="{standalone: true}"
+            [settings]="dropdownSettings"
+            >
+            </ng-multiselect-dropdown>
+        </td>
+        <td><input id="foreskiz_srok" type="date" [(ngModel)]="project.foreskiz_srok" [ngModelOptions]="{standalone: true}"></td>
+    </tr>
+</table>
+    

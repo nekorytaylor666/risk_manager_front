@@ -1,0 +1,67 @@
+<form [formGroup]="angForm">
+  <table class="table">
+    <tr>
+      <td align="right">{{ "login" | translate }}:</td>
+      <td>{{ user.login }}</td>
+    </tr>
+    <tr>
+      <td align="right">Email:</td>
+      <td>
+        <input type="text" [(ngModel)]="user.email" formControlName="email" />
+        <div *ngFor="let validation of account_validation_messages.email">
+          <div
+            *ngIf="angForm.get('email').hasError(validation.type)"
+            class="alert alert-danger"
+          >
+            {{ validation.message | translate }}
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td align="right">{{ "phone" | translate }}:</td>
+      <td>
+        <input type="text" [(ngModel)]="user.phone" formControlName="phone" />
+        <div *ngFor="let validation of account_validation_messages.phone">
+          <div
+            *ngIf="angForm.get('phone').hasError(validation.type)"
+            class="alert alert-danger"
+          >
+            {{ validation.message | translate }}
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="role == 'investor'">
+      <td align="right">{{ "bin" | translate }}:</td>
+      <td>{{ user.bin }}</td>
+    </tr>
+    <tr *ngIf="role == 'investor'">
+      <td align="right">{{ "organisation" | translate }}:</td>
+      <td>{{ user.organisation }}</td>
+    </tr>
+    <tr *ngIf="role == 'investor'">
+      <td align="right">{{ "address" | translate }}:</td>
+      <td>{{ user.address }}</td>
+    </tr>
+    <tr *ngIf="role == 'investor'">
+      <td align="right">{{ "fioDirector" | translate }}:</td>
+      <td>{{ user.fio_director }}</td>
+    </tr>
+    <tr *ngIf="role == 'investor'">
+      <td align="right">{{ "registration" | translate }}:</td>
+      <td>{{ user.registration }}</td>
+    </tr>
+    <tr align="center">
+      <td colspan="2">
+        <button
+          class="btn btn-success btn-s"
+          style="font-size: 8pt !important;"
+          (click)="save()"
+        >
+          {{ "save" | translate }}
+        </button>
+      </td>
+    </tr>
+  </table>
+</form>
