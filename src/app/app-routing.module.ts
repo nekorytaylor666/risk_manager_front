@@ -25,6 +25,7 @@ import { NoteComponent } from './note/note.component';
 import { GuideComponent } from './guide/guide.component';
 import { AddLawyerComponent } from './add-lawyer/add-lawyer.component';
 import { AddFinancierComponent } from './add-financier/add-financier.component';
+import { ProjectGantNewComponent } from './project-gant-new/project-gant-new.component';
 
 const routes: Routes = [
 	{ path: '', component: HomeComponent },
@@ -45,7 +46,7 @@ const routes: Routes = [
 	{ path: 'project-role', component: ProjectRoleComponent },
 	{ path: 'add-project-role', component: AddProjectRoleComponent },
 	{ path: 'edit-project-role', component: EditProjectRoleComponent },
-	{ path: 'project/gant', component: ProjectGantComponent },
+	{ path: 'project/gant', component: ProjectGantNewComponent },
 	{ path: 'project/anketa', component: ProjectAnketaComponent },
 	{ path: 'project/Second_etap', component: ProjectSecondEtapComponent },
 	{ path: 'project/1etapdocs', component: ProjectFirstEtapDocsComponent },

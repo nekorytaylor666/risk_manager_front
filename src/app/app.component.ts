@@ -20,7 +20,7 @@ export class AppComponent {
 	href: string;
 	projects: Project[];
 	errorMsg: string;
-	prCurrent: Project;
+	public prCurrent: Project;
 	opened: boolean;
 	pathURL = window.location.href;
 

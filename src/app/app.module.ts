@@ -58,6 +58,14 @@ import { NoteComponent } from './note/note.component';
 import { GuideComponent } from './guide/guide.component';
 import { AddLawyerComponent } from './add-lawyer/add-lawyer.component';
 import { AddFinancierComponent } from './add-financier/add-financier.component';
+import { ProjectGantNewComponent } from './project-gant-new/project-gant-new.component';
+import {
+	GanttModule,
+	EditService,
+	SelectionService,
+	ToolbarService,
+	DayMarkersService
+} from '@syncfusion/ej2-angular-gantt';
 
 export class MyTLH extends TranslateLogHandler {
 	info(message: string): void {
@@ -100,13 +108,16 @@ export class MyTLH extends TranslateLogHandler {
 		NoteComponent,
 		GuideComponent,
 		AddLawyerComponent,
-		AddFinancierComponent
+		AddFinancierComponent,
+		ProjectGantNewComponent
 	],
 	imports: [
 		BrowserModule,
+		GanttModule,
 		AppRoutingModule,
 		FileUploadModule,
 		FormsModule,
+
 		FlexLayoutModule,
 		ReactiveFormsModule,
 		ResizableModule,
@@ -137,7 +148,13 @@ export class MyTLH extends TranslateLogHandler {
 		//GoogleChartsModule.forRoot()
 		//Ng2GoogleChartsModule
 	],
-	providers: [{ provide: TranslateLogHandler, useClass: MyTLH }],
+	providers: [
+		{ provide: TranslateLogHandler, useClass: MyTLH },
+		EditService,
+		SelectionService,
+		ToolbarService,
+		DayMarkersService
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 <div class="container">
 <div style="padding: 0.5px;" fxLayout="column" style="width: 100%">
       <div class="sidenav-container" fxLayout="row" color="primary">
-        <div *ngIf="errorMsg"  [ngClass] = "'error'"> {{errorMsg}} </div> 
+        <div *ngIf="errorMsg"  [ngClass] = "'error'"> {{errorMsg}} </div>
         <table style="font-size: 10pt; width: 100%;">
           <tr>
             <td align="right"><b>{{ 'STATUS' | translate }}:</b></td>
@@ -46,7 +46,7 @@
       <mat-tree class="tree" fxFlex [dataSource]="dataSource" [treeControl]="treeControl" [ngStyle]="sidebarStyle"
         mwlResizable [resizeEdges]="{right: true}" [enableGhostResize]="true" [resizeSnapGrid]="{right: 1}" (resizeEnd)="onResizeEnd($event)">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-          <mat-form-field fxFlex floatLabel="never" class="text-animate">
+          <mat-form-field matInput fxFlex floatLabel="never" class="text-animate">
             <!--marquee [id]="node.name" onload="this.stop()" onmouseout="this.stop()" onmouseover="this.start()"><label *ngIf="node.level==0">{{ 'project time' | translate }}</label>{{node.name}}</marquee-->
             <span matInput><label *ngIf="node.level==0">{{ 'project time' | translate }}</label>&nbsp;{{node.name}}</span>
             <!--label *ngIf="node.level==0">{{ 'project time' | translate }}</label>&nbsp;
@@ -67,9 +67,9 @@
               {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
           </button>
-          <mat-form-field class="text-animate" fxFlex floatLabel="never">
+          <mat-form-field matInput class="text-animate" fxFlex floatLabel="never">
             <!--marquee [id]="node.name" onload="this.stop()" onmouseout="this.stop()" onmouseover="this.start()"><label *ngIf="node.level==0">{{ 'project time' | translate }}</label> &nbsp;{{node.name}}</marquee-->
-            <span matInput><label *ngIf="node.level==0">{{ 'project time' | translate }}</label>&nbsp;{{node.name}}</span>
+            <span matInput><label *ngIf="node.level==0">{{ project.name }}</label>&nbsp;{{node.name}}</span>
             <!--label *ngIf="node.level==0">{{ 'project time' | translate }}</label>&nbsp;
             <input matInput placeholder="{{'Step Name' | translate}}" name="node" [(ngModel)]="node.name" (ngModelChange)="updateStepName(node, $event)"
               required disabled title="{{node.name}}"/-->
@@ -91,7 +91,7 @@
       </mat-tree>
     </div>
     <!-- date pickers -->
-    <!--div class="sidenav date-pickers" fxLayout="column">
+    <div class="sidenav date-pickers" fxLayout="column">
       <div class="sidenav-header text-center">Dates</div>
       <mat-tree class="tree" fxFlex [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node">
@@ -112,9 +112,9 @@
           </mat-form-field>
         </mat-tree-node>
       </mat-tree>
-    </div-->
+    </div>
     <!-- progress -->
-    <!--div class="sidenav progress-bars" fxLayout="column">
+    <div class="sidenav progress-bars" fxLayout="column">
       <div class="sidenav-header text-center">Progress</div>
       <mat-tree class="tree" fxFlex [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" class="progress-row">
@@ -122,8 +122,7 @@
             [(ngModel)]="node.progress" (ngModelChange)="updateProgress(node, $event)"></mat-slider>
         </mat-tree-node>
       </mat-tree>
-    </div-->
-    <!-- calendar -->
+    </div>
     <div class="sidenav-content calendar" fxLayout="column">
       <div fxLayout="row">
         <div *ngFor="let month of months">
@@ -167,10 +166,10 @@
                     <label><b>{{ 'STAGE' | translate }}:</b></label>
                     <button mat-icon-button (click)="editName()" class="text-green">
                       <mat-icon>edit</mat-icon>
-                    </button>          
+                    </button>
                     <button mat-icon-button (click)="cancelName()" class="text-green">
                       <mat-icon>cancel</mat-icon>
-                    </button>          
+                    </button>
                   </td>
                   <td align="left">{{currentStep.name}}</td>
                 </tr>
@@ -180,13 +179,13 @@
                 </tr>
                 <tr>
                   <td align="right" style="width: 30%">
-                    <label><b>{{ 'start date' | translate }}:</b></label> 
+                    <label><b>{{ 'start date' | translate }}:</b></label>
                     <button mat-icon-button (click)="editStart()" class="text-green">
                       <mat-icon>edit</mat-icon>
-                    </button>          
+                    </button>
                     <button mat-icon-button (click)="cancelStart()" class="text-green">
                       <mat-icon>cancel</mat-icon>
-                    </button>          
+                    </button>
                   </td>
                   <td align="left">{{currentStep.dates.start}}</td>
                 </tr>
@@ -196,13 +195,13 @@
                 </tr>
                 <tr>
                   <td align="right" style="width: 30%">
-                    <label><b>{{ 'end date' | translate }}:</b></label> 
+                    <label><b>{{ 'end date' | translate }}:</b></label>
                     <button mat-icon-button (click)="editEnd()" class="text-green">
                       <mat-icon>edit</mat-icon>
-                    </button>          
+                    </button>
                     <button mat-icon-button (click)="cancelEnd()" class="text-green">
                       <mat-icon>cancel</mat-icon>
-                    </button>          
+                    </button>
                   </td>
                   <td align="left">{{currentStep.dates.end}}</td>
                 </tr>
@@ -215,10 +214,10 @@
                     <label><b>{{ 'comments' | translate }}:</b></label>
                     <button mat-icon-button (click)="editComment()" class="text-green">
                       <mat-icon>edit</mat-icon>
-                    </button>          
+                    </button>
                     <button mat-icon-button (click)="cancelComment()" class="text-green">
                       <mat-icon>cancel</mat-icon>
-                    </button>          
+                    </button>
                     <ul>
                       <li *ngFor="let item of currentStep.comments; let i = index;">
                         {{item}}
@@ -229,16 +228,16 @@
                 <tr *ngIf="editCommentBool">
                   <td align="right"><label>{{'new comments' | translate }}</label></td>
                   <td align="left"><input type="text" placeholder="{{'new comments' | translate }}" [(ngModel)]="currentComment" [ngModelOptions]="{standalone: true}"></td>
-                </tr>  
+                </tr>
                 <tr>
                   <td colspan="2">
                     <label><b>{{ 'files' | translate }}:</b></label>
                     <button mat-icon-button (click)="editFiles()" class="text-green">
                       <mat-icon>edit</mat-icon>
-                    </button>          
+                    </button>
                     <button mat-icon-button (click)="cancelFiles()" class="text-green">
                       <mat-icon>cancel</mat-icon>
-                    </button>          
+                    </button>
                     <ul>
                       <li *ngFor="let item of currentStep.files; let i = index;">
                         <a href='{{urlBack}}/api/users/{{item.name}}'>{{item.name}}</a>
@@ -250,8 +249,8 @@
                   <td colspan="2">
                     <div class="container">
                       <input type="file" ng2FileSelect [uploader]="currentFile"/>
-                      <button style="font-size: 8pt !important;" class="btn btn-success btn-s" 
-                        (click)="currentFile.uploadAll()" 
+                      <button style="font-size: 8pt !important;" class="btn btn-success btn-s"
+                        (click)="currentFile.uploadAll()"
                         [disabled]="!currentFile.getNotUploadedItems().length" >
                         {{ 'upload' | translate }}
                       </button>
@@ -264,7 +263,7 @@
                 <tr>
                   <td><button style="font-size: 8pt !important;" (click)=saveCurrentStep() class="btn btn-success btn-s">{{ 'save' | translate }}</button></td>
                   <td><button style="font-size: 8pt !important;" (click)=showGantDiagram() class="btn btn-success btn-s">{{ 'return gant' | translate }}</button></td>
-                </tr>  
+                </tr>
               </table>
             </form>
           </div>

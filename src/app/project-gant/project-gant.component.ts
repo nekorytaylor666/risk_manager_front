@@ -55,12 +55,13 @@ export class ChartDatabase {
 				headers: { 'x-access-token': localStorage.getItem('id_token') }
 			})
 			.subscribe(
-				(res) => this.setProject(res),
+				(res) => {
+					this.setProject(res);
+				},
 				(error) => {
 					this.errorMsg = error.error.message;
 				}
 			);
-		//this.initialize();
 		this.dataChange.asObservable().subscribe((val) => {
 			this.saveStorage(val);
 		});

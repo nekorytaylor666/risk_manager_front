@@ -1,16 +1,17 @@
 a {
-    cursor: pointer
+	cursor: pointer;
 }
 
 img {
-    width: 25px;
-    height: 20px
+	width: 25px;
+	height: 20px;
 }
 
 .nav-caption {
-    display: inline-block;
+	display: inline-block;
 }
 
-a:hover, a:active{
-    color: rebeccapurple
+a:hover,
+a:active {
+	color: rebeccapurple;
 }
