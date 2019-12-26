@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import * as config from '../../../config';
 import { Project } from '../service/authentication.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-
+import { GanttConfig } from './gantt-config';
 @Component({
 	selector: 'app-project-gant-new',
 	templateUrl: './project-gant-new.component.html',
@@ -17,11 +17,7 @@ export class ProjectGantNewComponent implements OnInit {
 	data: GanttTask[];
 	project: Project;
 	errorMsg: string;
-	public taskSettings: object;
-	public timelineSettings: object;
-	public columns: object[];
-	public toolbar: any;
-	public editSettings: EditSettingsModel;
+	ganttConfig: any;
 	private id: string;
 
 	constructor(private route: ActivatedRoute, private http: HttpClient, private spinner: NgxSpinnerService) {
@@ -29,20 +25,7 @@ export class ProjectGantNewComponent implements OnInit {
 			this.id = params.id;
 		});
 
-		this.http
-			.get(config.urlBack + '/api/projects/project/' + this.id, {
-				headers: { 'x-access-token': localStorage.getItem('id_token') }
-			})
-			.subscribe(
-				(res) => {
-					this.setProject(res);
-					console.log('project gantt: current project = ' + this.project.foreskiz_date);
-				},
-				(error) => {
-					this.errorMsg = error.error.message;
-					console.log(error);
-				}
-			);
+		this.ganttConfig = GanttConfig;
 	}
 
 	setProject(project) {
@@ -142,41 +125,21 @@ export class ProjectGantNewComponent implements OnInit {
 		}, 1000);
 	}
 	ngOnInit() {
+		this.http
+			.get(config.urlBack + '/api/projects/project/' + this.id, {
+				headers: { 'x-access-token': localStorage.getItem('id_token') }
+			})
+			.subscribe(
+				(res) => {
+					this.setProject(res);
+					console.log('project gantt: current project = ' + this.project.foreskiz_date);
+				},
+				(error) => {
+					this.errorMsg = error.error.message;
+					console.log(error);
+				}
+			);
 		this.spinner.show();
-		this.data = [];
-		this.taskSettings = {
-			id: 'id',
-			name: 'name',
-			startDate: 'startDate',
-			endDate: 'endDate',
-			duration: 'duration',
-			progress: 'progress',
-			dependency: 'predecessor',
-			child: 'subtasks'
-		};
-		this.timelineSettings = {
-			topTier: {
-				format: 'MMM dd, yyyy',
-				unit: 'Month'
-			},
-			bottomTier: {
-				unit: 'Week'
-			}
-		};
-		this.columns = [
-			{ field: 'name', headerText: 'Task Name', width: '400' },
-			{ field: 'id', headerText: 'ID', textAlign: 'Left', width: '80' },
-			{ field: 'startDate', headerText: 'Start Date', width: '150' },
-			{ field: 'duration', headerText: 'Duration', width: '150' },
-			{ field: 'progress', headerText: 'Progress', width: '150' }
-		];
-
-		this.editSettings = {
-			allowEditing: true,
-			mode: 'Dialog'
-		};
-
-		this.toolbar = ['Edit', { text: 'Save', tooltipText: 'Save', id: 'save', align: 'left' }];
 	}
 
 	public toolbarClick(args: ClickEventArgs): void {

@@ -15,7 +15,6 @@ import { AddProjectRoleComponent } from './add-project-role/add-project-role.com
 import { EditProjectRoleComponent } from './edit-project-role/edit-project-role.component';
 import { ProjectAnketaComponent } from './project-anketa/project-anketa.component';
 import { ProjectFirstEtapDocsComponent } from './project-first-etap-docs/project-first-etap-docs.component';
-import { ProjectGantComponent } from './project-gant/project-gant.component';
 import { ProjectSecondEtapComponent } from './project-second-etap/project-second-etap.component';
 import { ProjectSpkDocsComponent } from './project-spk-docs/project-spk-docs.component';
 import { CabinetComponent } from './cabinet/cabinet.component';

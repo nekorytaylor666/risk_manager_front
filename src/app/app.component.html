@@ -121,7 +121,8 @@
 							*ngIf="pr.status == 'Принято'"
 							[ngClass]="{ 'text-info': pathURL.includes('/project/gant?id=' + pr._id) }"
 							mat-list-item
-							[href]="'/project/gant?id=' + pr._id"
+							[routerLink]="['/project/gant']"
+							[queryParams]="{ id: pr._id }"
 							><mat-icon>assignment</mat-icon> {{ 'GANTA' | translate }}
 						</a>
 						<a
@@ -134,7 +135,8 @@
 						<a
 							*ngIf="pr.status == 'Принято'"
 							mat-list-item
-							[href]="'/project/Second_etap?id=' + pr._id"
+							[routerLink]="['/project/Second_etap']"
+							[queryParams]="{ id: pr._id }"
 							[ngClass]="{ 'text-info': pathURL.includes('/project/Second_etap?id=' + pr._id) }"
 							><mat-icon>file_copy</mat-icon> {{ '2ETAP' | translate }}
 						</a>
@@ -146,14 +148,16 @@
 								<div [id]="'doc_' + pr._id" [hidden]="!pathURL.includes('docs?id=' + pr._id)">
 									<a
 										mat-list-item
-										[href]="'/project/1etapdocs?id=' + pr._id"
+										[routerLink]="['/project/1etapdocs']"
+										[queryParams]="{ id: pr._id }"
 										[ngClass]="{ 'text-info': pathURL.includes('/project/1etapdocs?id=' + pr._id) }"
 										><mat-icon>folder_open</mat-icon> {{ '1-STAGE' | translate }}
 									</a>
 									<!--a mat-list-item [routerLink]="'/project/2etapdocs/'" [queryParams]="{id: pr._id}"> ВТОРОЙ ЭТАП </a-->
 									<a
 										mat-list-item
-										[href]="'/project/spkdocs?id=' + pr._id"
+										[routerLink]="['/project/spkdocs']"
+										[queryParams]="{ id: pr._id }"
 										[ngClass]="{ 'text-info': pathURL.includes('/project/spkdocs?id=' + pr._id) }"
 										><mat-icon>folder</mat-icon> {{ 'SPK' | translate }}
 									</a>
@@ -205,12 +209,12 @@
 						</a>
 					</li>
 					<li class="breadcrumb-item" *ngIf="pathURL.includes('/project/anketa?id=')">
-						<a [href]="'/project/anketa?id=' + prCurrent._id" class="nav-caption">
+						<a [routerLink]="['/project/anketa']" [queryParams]="{ id: prCurrent._id }" class="nav-caption">
 							{{ 'ANKETA' | translate }}
 						</a>
 					</li>
 					<li class="breadcrumb-item" *ngIf="pathURL.includes('/project/Second_etap?id=')">
-						<a [href]="'/project/2etap?id=' + prCurrent._id" class="nav-caption">
+						<a [routerLink]="['/project/2etap']" [queryParams]="{ id: prCurrent._id }" class="nav-caption">
 							{{ '2ETAP' | translate }}
 						</a>
 					</li>
@@ -222,12 +226,20 @@
 						<a href="#" class="nav-caption"> {{ 'DOCUMENTATION' | translate }} </a>
 					</li>
 					<li class="breadcrumb-item" *ngIf="pathURL.includes('/project/1etapdocs?id=')">
-						<a [href]="'/project/1etapdocs?id=' + prCurrent._id" class="nav-caption">
+						<a
+							[routerLink]="['/project/1etapdocs']"
+							[queryParams]="{ id: prCurrent._id }"
+							class="nav-caption"
+						>
 							{{ '1-STAGE' | translate }}
 						</a>
 					</li>
 					<li class="breadcrumb-item" *ngIf="pathURL.includes('/project/spkdocs?id=')">
-						<a [href]="'/project/spkdocs?id=' + prCurrent._id" class="nav-caption">
+						<a
+							[routerLink]="['/project/spkdocs']"
+							[queryParams]="{ id: prCurrent._id }"
+							class="nav-caption"
+						>
 							{{ 'SPK' | translate }}
 						</a>
 					</li>
