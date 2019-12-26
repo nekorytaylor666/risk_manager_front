@@ -1,5 +1,5 @@
 module.exports = {
-    'urlFront':'http://localhost:4200',
-    'urlBack':'http://localhost:4000',
-    'url':'localhost:4000'
+	urlFront: 'http://185.125.46.205:4200',
+	urlBack: 'http://185.125.46.205:4000',
+	url: 'http://185.125.46.205:4000'
 };
